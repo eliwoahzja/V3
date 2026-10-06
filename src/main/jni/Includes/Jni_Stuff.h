@@ -266,12 +266,31 @@ std::string getClipboard() {
 }
 
 std::string Login(const char *user_key) {
-    JNIEnv *env;
-    jvm->AttachCurrentThread(&env, 0);
+    if (!jvm) {
+        return "JavaVM unavailable";
+    }
+    JNIEnv *env = nullptr;
+    bool attachedHere = false;
+    if (jvm->GetEnv((void **)&env, JNI_VERSION_1_6) != JNI_OK) {
+        if (jvm->AttachCurrentThread(&env, 0) == JNI_OK) {
+            attachedHere = true;
+        }
+    }
+    if (!env) {
+        return "JNI environment unavailable";
+    }
     
     auto looperClass = env->FindClass("android/os/Looper");
-    auto prepareMethod = env->GetStaticMethodID(looperClass, "prepare", "()V");
-    env->CallStaticVoidMethod(looperClass, prepareMethod);
+    if (looperClass) {
+        auto prepareMethod = env->GetStaticMethodID(looperClass, "prepare", "()V");
+        if (prepareMethod) {
+            env->CallStaticVoidMethod(looperClass, prepareMethod);
+        }
+        if (env->ExceptionCheck()) {
+            env->ExceptionClear();
+        }
+        env->DeleteLocalRef(looperClass);
+    }
     
     jclass activityThreadClass = env->FindClass("android/app/ActivityThread");
     jfieldID sCurrentActivityThreadField = env->GetStaticFieldID(activityThreadClass, "sCurrentActivityThread", "Landroid/app/ActivityThread;");
@@ -285,7 +304,9 @@ std::string Login(const char *user_key) {
     hwid += GetDeviceModel(env);
     hwid += GetDeviceBrand(env);
     std::string UUID = GetDeviceUniqueIdentifier(env, hwid.c_str());
-    jvm->DetachCurrentThread();
+    if (env->ExceptionCheck()) {
+        env->ExceptionClear();
+    }
     std::string errMsg;
 	usedKey = user_key;  
     
@@ -296,7 +317,7 @@ std::string Login(const char *user_key) {
     }  
 	
     struct MemoryStruct chunk{};
-    chunk.memory = (char *) malloc(1);
+    chunk.memory = (char *) calloc(1, 1);
     chunk.size = 0;
     
     CURL *curl;
@@ -311,8 +332,10 @@ std::string Login(const char *user_key) {
         
         struct curl_slist *headers = NULL;
         headers = curl_slist_append(headers, "Content-Type: application/x-www-form-urlencoded");
+        headers = curl_slist_append(headers, "Accept: application/json");
         
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+        curl_easy_setopt(curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36");
         char data[4096];
         sprintf(data, "game=CODMGR&user_key=%s&serial=%s", user_key, UUID.c_str());
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
@@ -323,6 +346,11 @@ std::string Login(const char *user_key) {
         
         res = curl_easy_perform(curl);
         if (res == CURLE_OK) {
+            long httpCode = 0;
+            curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &httpCode);
+            if (httpCode != 200) {
+                errMsg = "Server error: HTTP " + std::to_string(httpCode);
+            } else {
             try {
                 json result = json::parse(chunk.memory);
                 if (result["status"] == true) {
@@ -350,18 +378,19 @@ std::string Login(const char *user_key) {
                 } else {
                     errMsg = result["reason"].get<std::string>();
                 }
-            } catch (json::exception &e) {
-                errMsg = "{";
-                errMsg += e.what();
-                errMsg += "}\n{";
-                errMsg += chunk.memory;
-                errMsg += "}";
+            } catch (std::exception &e) {
+                errMsg = e.what();
+            }
             }
         } else {
             errMsg = curl_easy_strerror(res);
         }
     }
     curl_easy_cleanup(curl);
-    jvm->DetachCurrentThread();
+    free(chunk.memory);
+    chunk.memory = nullptr;
+    if (attachedHere) {
+        jvm->DetachCurrentThread();
+    }
     return bValid ? "OK" : errMsg;
 }
