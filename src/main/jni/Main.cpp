@@ -918,7 +918,7 @@ bool RedWallhackShow = false;
 bool isJumpAdjustmentEnabled = false;
 float jumpHeightMultiplier = 1.0f;
 char logintext[4096];
-float menu[4] = {188.0f / 255.0f, 110.0f / 255.0f, 1.0f, 1.0f};
+float menu[4] = {142.0f / 255.0f, 134.0f / 255.0f, 246.0f / 255.0f, 1.0f};
 
 float g_LastLogoOpacity = 1.0f;
 float g_LastLogoSize = 1.0f;
@@ -1025,7 +1025,7 @@ namespace ModernUI {
         if (perimeter <= 1.0f) return;
 
         float hr, hg, hb;
-        ImGui::ColorConvertHSVtoRGB(ImClamp(main_runtime_theme::g_menuHue, 0.0f, 1.0f), 0.75f, 1.0f, hr, hg, hb);
+        ImGui::ColorConvertHSVtoRGB(ImClamp(main_runtime_theme::g_menuHue, 0.0f, 1.0f), 0.50f, 0.97f, hr, hg, hb);
         const int cr = (int)(hr * 255.0f);
         const int cg = (int)(hg * 255.0f);
         const int cb = (int)(hb * 255.0f);
@@ -1076,26 +1076,26 @@ namespace ModernUI {
                               base.y + normal.y * outward + tangent.y * along);
         }
 
-        float flicker = 0.69f
-            + 0.12f * std::sin(t * 31.0f)
-            + 0.08f * std::sin(t * 53.0f + 0.8f)
-            + 0.07f * std::sin(t * 79.0f + 2.1f);
+        float flicker = 0.78f
+            + 0.06f * std::sin(t * 31.0f)
+            + 0.04f * std::sin(t * 53.0f + 0.8f)
+            + 0.03f * std::sin(t * 79.0f + 2.1f);
         const float flashWave = 0.5f + 0.5f * std::sin(t * 17.0f + std::sin(t * 3.3f) * 2.0f);
-        flicker += std::pow(flashWave, 9.0f) * 0.34f;
+        flicker += std::pow(flashWave, 9.0f) * 0.14f;
         flicker = clamp01(flicker);
 
-        const int haloWide = clampAlpha(34.0f + flicker * 72.0f);
-        const int haloMid  = clampAlpha(62.0f + flicker * 105.0f);
-        const int coreSoft = clampAlpha(128.0f + flicker * 112.0f);
-        const int coreHot  = clampAlpha(185.0f + flicker * 70.0f);
+        const int haloWide = clampAlpha(16.0f + flicker * 30.0f);
+        const int haloMid  = clampAlpha(30.0f + flicker * 44.0f);
+        const int coreSoft = clampAlpha(60.0f + flicker * 52.0f);
+        const int coreHot  = clampAlpha(95.0f + flicker * 45.0f);
 
         for (int i = 0; i < samples; ++i) {
             const ImVec2& a = path[(size_t)i];
             const ImVec2& b = path[(size_t)((i + 1) % samples)];
-            back->AddLine(a, b, IM_COL32(cr, cg, cb, haloWide), 18.0f);
-            back->AddLine(a, b, IM_COL32(cr, cg, cb, haloMid),  8.5f);
-            front->AddLine(a, b, IM_COL32(255, 255, 255, coreSoft), 3.2f);
-            front->AddLine(a, b, IM_COL32(255, 255, 255, coreHot), 1.35f);
+            back->AddLine(a, b, IM_COL32(cr, cg, cb, haloWide), 10.0f);
+            back->AddLine(a, b, IM_COL32(cr, cg, cb, haloMid),  6.0f);
+            front->AddLine(a, b, IM_COL32(235, 235, 235, coreSoft), 2.2f);
+            front->AddLine(a, b, IM_COL32(235, 235, 235, coreHot), 1.0f);
         }
 
         const float headD = std::fmod(t * 245.0f, perimeter);
@@ -1113,8 +1113,8 @@ namespace ModernUI {
 
             const ImVec2& a = path[(size_t)i];
             const ImVec2& b = path[(size_t)((i + 1) % samples)];
-            back->AddLine(a, b, IM_COL32(cr, cg, cb, clampAlpha(40.0f + hot * 125.0f)), 13.0f);
-            front->AddLine(a, b, IM_COL32(255, 255, 255, clampAlpha(120.0f + hot * 135.0f)), 2.1f);
+            back->AddLine(a, b, IM_COL32(cr, cg, cb, clampAlpha(22.0f + hot * 60.0f)), 8.0f);
+            front->AddLine(a, b, IM_COL32(235, 235, 235, clampAlpha(55.0f + hot * 75.0f)), 1.6f);
         }
     }
 
@@ -1165,7 +1165,7 @@ namespace ModernUI {
                 hoverSlice = (int)(rawAngle / sliceAngle);
 
             float hr, hg, hb;
-            ImGui::ColorConvertHSVtoRGB(ImClamp(main_runtime_theme::g_menuHue, 0.0f, 1.0f), 0.80f, 1.0f, hr, hg, hb);
+            ImGui::ColorConvertHSVtoRGB(ImClamp(main_runtime_theme::g_menuHue, 0.0f, 1.0f), 0.50f, 0.97f, hr, hg, hb);
             const int cr = (int)(hr * 255.0f);
             const int cg = (int)(hg * 255.0f);
             const int cb = (int)(hb * 255.0f);
@@ -1183,7 +1183,7 @@ namespace ModernUI {
                 }
                 const bool hot = (hoverSlice == s);
                 dl->AddConvexPolyFilled(poly, arcSteps + 2,
-                    hot ? IM_COL32(cr, cg, cb, 110) : IM_COL32(12, 15, 22, 210));
+                    hot ? IM_COL32(cr, cg, cb, 110) : IM_COL32(14, 14, 14, 235));
             }
 
             for (int s = 0; s < sliceCount; ++s) {
@@ -1192,9 +1192,9 @@ namespace ModernUI {
                 ImVec2 p1(c.x + std::cos(a) * outerRadius, c.y + std::sin(a) * outerRadius);
                 dl->AddLine(p0, p1, IM_COL32(cr, cg, cb, 190), 1.6f);
             }
-            dl->AddCircleFilled(c, hubRadius, IM_COL32(8, 10, 16, 235), 48);
+            dl->AddCircleFilled(c, hubRadius, IM_COL32(5, 5, 5, 245), 48);
             dl->AddCircle(c, hubRadius, IM_COL32(cr, cg, cb, 255), 48, 2.0f);
-            dl->AddCircle(c, hubRadius - 4.0f, IM_COL32(255, 255, 255, 200), 48, 1.0f);
+            dl->AddCircle(c, hubRadius - 4.0f, IM_COL32(235, 235, 235, 160), 48, 1.0f);
 
             const int ringPts = 160;
             ImVec2 ring[ringPts];
@@ -1215,9 +1215,9 @@ namespace ModernUI {
             for (int i = 0; i < ringPts; ++i) {
                 const ImVec2& a = ring[i];
                 const ImVec2& b = ring[(i + 1) % ringPts];
-                dl->AddLine(a, b, IM_COL32(cr, cg, cb, (int)(45.0f + wheelFlicker * 70.0f)), 10.0f);
-                dl->AddLine(a, b, IM_COL32(cr, cg, cb, (int)(130.0f + wheelFlicker * 100.0f)), 2.6f);
-                dl->AddLine(a, b, IM_COL32(255, 255, 255, (int)(200.0f + wheelFlicker * 55.0f)), 1.1f);
+                dl->AddLine(a, b, IM_COL32(cr, cg, cb, (int)(30.0f + wheelFlicker * 45.0f)), 8.0f);
+                dl->AddLine(a, b, IM_COL32(cr, cg, cb, (int)(90.0f + wheelFlicker * 70.0f)), 2.4f);
+                dl->AddLine(a, b, IM_COL32(235, 235, 235, (int)(110.0f + wheelFlicker * 45.0f)), 1.0f);
             }
 
             for (int s = 0; s < sliceCount; ++s) {
@@ -1225,7 +1225,7 @@ namespace ModernUI {
                 const float labelRadius = 122.0f;
                 ImVec2 p(c.x + std::cos(a) * labelRadius, c.y + std::sin(a) * labelRadius);
                 ImVec2 ts = ImGui::CalcTextSize(labels[s]);
-                ImU32 col = (hoverSlice == s) ? IM_COL32(255, 255, 255, 255) : IM_COL32(215, 225, 240, 235);
+                ImU32 col = (hoverSlice == s) ? IM_COL32(235, 235, 235, 255) : IM_COL32(180, 180, 184, 255);
                 dl->AddText(ImVec2(p.x - ts.x * 0.5f, p.y - ts.y * 0.5f), col, labels[s]);
             }
 
@@ -1622,8 +1622,8 @@ EGLBoolean hook_eglSwapBuffers(EGLDisplay dpy, EGLSurface surface)
                         runtimeState.page = ImClamp(runtimeState.page, 1, 6);
                         runtimeState.activeTab = ImClamp(runtimeState.activeTab, 1, 6);
 
-                        runtimeDrawList->AddRectFilled(headerMin, headerMax, IM_COL32(7, 10, 20, 236), 11.0f);
-                        runtimeDrawList->AddRect(headerMin, headerMax, main_runtime_theme::GetAccentTintU32(0.70f, 0.70f), 11.0f, 0, 1.0f);
+                        runtimeDrawList->AddRectFilled(headerMin, headerMax, IM_COL32(14, 14, 14, 250), 11.0f);
+                        runtimeDrawList->AddRect(headerMin, headerMax, IM_COL32(45, 45, 45, 220), 11.0f, 0, 1.0f);
 
                         const ImVec2 flameCenter(headerMin.x + 28.0f, headerMin.y + headerHeight * 0.5f);
                         runtimeDrawList->AddCircleFilled(flameCenter, 18.0f, main_runtime_theme::GetAccentTintU32(0.25f, 0.55f), 28);
@@ -1639,14 +1639,14 @@ EGLBoolean hook_eglSwapBuffers(EGLDisplay dpy, EGLSurface surface)
                         const char *titleA = "JAREDAX CONTAINER";
                         const char *titleB = " V3";
                         const ImVec2 titleASize = runtimeTitleFont->CalcTextSizeA(runtimeTitleSize, FLT_MAX, 0.0f, titleA);
-                        runtimeDrawList->AddText(runtimeTitleFont, runtimeTitleSize, ImVec2(headerMin.x + 56.0f, headerMin.y + 11.0f), IM_COL32(245, 245, 250, 255), titleA);
+                        runtimeDrawList->AddText(runtimeTitleFont, runtimeTitleSize, ImVec2(headerMin.x + 56.0f, headerMin.y + 11.0f), IM_COL32(235, 235, 235, 255), titleA);
                         runtimeDrawList->AddText(runtimeTitleFont, runtimeTitleSize, ImVec2(headerMin.x + 56.0f + titleASize.x, headerMin.y + 11.0f), main_runtime_theme::GetAccentU32(), titleB);
 
                         static const char* catNames[] = { "VISUAL", "COMBAT", "MEMORY", "SKINS", "MISC", "SETTINGS" };
                         char currentCat[64];
                         snprintf(currentCat, sizeof(currentCat), "Current: %s", catNames[runtimeState.activeTab - 1]);
                         const ImVec2 subtitlePos(headerMin.x + 57.0f, headerMin.y + 38.0f);
-                        runtimeDrawList->AddText(runtimeTitleFont, 10.0f, subtitlePos, IM_COL32(135, 143, 165, 220), currentCat);
+                        runtimeDrawList->AddText(runtimeTitleFont, 10.0f, subtitlePos, IM_COL32(142, 142, 148, 235), currentCat);
 
                         // ===== COLOR SLIDER =====
                         const ImVec2 trackMin(headerMin.x + headerMainWidth * 0.42f, headerMin.y + 28.0f);
@@ -1689,11 +1689,11 @@ EGLBoolean hook_eglSwapBuffers(EGLDisplay dpy, EGLSurface surface)
 
                         // --- BACK TO PIZZA ---
                         ImGui::SetCursorScreenPos(ImVec2(hGroupStartX, hBtnY));
-                        ImGui::PushStyleColor(ImGuiCol_Button,        ImVec4(0.10f, 0.12f, 0.18f, 0.95f));
-                        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.30f, 0.42f, 0.58f, 1.00f));
-                        ImGui::PushStyleColor(ImGuiCol_ButtonActive,  ImVec4(0.45f, 0.60f, 0.80f, 1.00f));
-                        ImGui::PushStyleColor(ImGuiCol_Border,        ImVec4(0.70f, 0.80f, 0.95f, 0.85f));
-                        ImGui::PushStyleColor(ImGuiCol_Text,          ImVec4(0.98f, 0.98f, 1.00f, 1.00f));
+                        ImGui::PushStyleColor(ImGuiCol_Button,        ImVec4(0.086f, 0.086f, 0.086f, 0.95f));
+                        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.22f, 0.20f, 0.42f, 1.00f));
+                        ImGui::PushStyleColor(ImGuiCol_ButtonActive,  ImVec4(0.32f, 0.29f, 0.60f, 1.00f));
+                        ImGui::PushStyleColor(ImGuiCol_Border,        ImVec4(0.176f, 0.176f, 0.176f, 0.90f));
+                        ImGui::PushStyleColor(ImGuiCol_Text,          ImVec4(0.92f, 0.92f, 0.92f, 1.00f));
                         if (ImGui::Button("<- BACK", ImVec2(hBtnW, hBtnH))) {
                             g_ShowRadialMenu = true;
                         }
@@ -1703,11 +1703,11 @@ EGLBoolean hook_eglSwapBuffers(EGLDisplay dpy, EGLSurface surface)
                         ImGui::SameLine(0.0f, hBtnGap);
 
                         // --- SAVE ---
-                        ImGui::PushStyleColor(ImGuiCol_Button,        ImVec4(0.05f, 0.20f, 0.10f, 0.95f));
-                        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.15f, 0.60f, 0.32f, 1.00f));
-                        ImGui::PushStyleColor(ImGuiCol_ButtonActive,  ImVec4(0.20f, 0.80f, 0.42f, 1.00f));
-                        ImGui::PushStyleColor(ImGuiCol_Border,        ImVec4(0.40f, 0.95f, 0.55f, 0.85f));
-                        ImGui::PushStyleColor(ImGuiCol_Text,          ImVec4(1.00f, 1.00f, 1.00f, 1.00f));
+                        ImGui::PushStyleColor(ImGuiCol_Button,        ImVec4(0.086f, 0.086f, 0.086f, 0.95f));
+                        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.22f, 0.20f, 0.42f, 1.00f));
+                        ImGui::PushStyleColor(ImGuiCol_ButtonActive,  ImVec4(0.32f, 0.29f, 0.60f, 1.00f));
+                        ImGui::PushStyleColor(ImGuiCol_Border,        ImVec4(0.176f, 0.176f, 0.176f, 0.90f));
+                        ImGui::PushStyleColor(ImGuiCol_Text,          ImVec4(0.92f, 0.92f, 0.92f, 1.00f));
                         if (ImGui::Button("SAVE", ImVec2(hBtnW, hBtnH))) {
                             SaveConfiguration("astavex_config");
                             SaveConfig();
@@ -1718,11 +1718,11 @@ EGLBoolean hook_eglSwapBuffers(EGLDisplay dpy, EGLSurface surface)
                         ImGui::SameLine(0.0f, hBtnGap);
 
                         // --- HIDE ---
-                        ImGui::PushStyleColor(ImGuiCol_Button,        ImVec4(0.30f, 0.05f, 0.08f, 0.95f));
-                        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.90f, 0.18f, 0.22f, 1.00f));
-                        ImGui::PushStyleColor(ImGuiCol_ButtonActive,  ImVec4(1.00f, 0.22f, 0.28f, 1.00f));
-                        ImGui::PushStyleColor(ImGuiCol_Border,        ImVec4(0.95f, 0.40f, 0.45f, 0.85f));
-                        ImGui::PushStyleColor(ImGuiCol_Text,          ImVec4(1.00f, 1.00f, 1.00f, 1.00f));
+                        ImGui::PushStyleColor(ImGuiCol_Button,        ImVec4(0.086f, 0.086f, 0.086f, 0.95f));
+                        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.22f, 0.20f, 0.42f, 1.00f));
+                        ImGui::PushStyleColor(ImGuiCol_ButtonActive,  ImVec4(0.32f, 0.29f, 0.60f, 1.00f));
+                        ImGui::PushStyleColor(ImGuiCol_Border,        ImVec4(0.176f, 0.176f, 0.176f, 0.90f));
+                        ImGui::PushStyleColor(ImGuiCol_Text,          ImVec4(0.92f, 0.92f, 0.92f, 1.00f));
                         if (ImGui::Button("HIDE", ImVec2(hBtnW, hBtnH))) {
                             windowCollapsed = true;
                             isMenuVisible = false;

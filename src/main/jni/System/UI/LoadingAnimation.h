@@ -18,13 +18,10 @@ namespace font {
 
 namespace ui_loading {
 
-// =========================
-// LIME GREEN THEME
-// =========================
-static const ImVec4 limeAccent(0.20f, 1.00f, 0.20f, 1.00f);      // Bright Lime
-static const ImVec4 limeDim(0.40f, 0.80f, 0.40f, 0.60f);        // Dimmer Lime
-static const ImVec4 limeSoft(0.30f, 1.00f, 0.30f, 0.30f);       // Soft Glow
-static const ImVec4 limeText(0.10f, 0.50f, 0.10f, 1.00f);       // Dark Text
+static const ImVec4 limeAccent(0.557f, 0.525f, 0.965f, 1.00f);
+static const ImVec4 limeDim(0.42f, 0.39f, 0.80f, 0.60f);
+static const ImVec4 limeSoft(0.557f, 0.525f, 0.965f, 0.30f);
+static const ImVec4 limeText(0.35f, 0.32f, 0.68f, 1.00f);
 
 struct TechNode {
     ImVec2 pos;
@@ -179,7 +176,7 @@ inline void DrawAnimation(ImDrawList* draw, const ImVec2& center, float radius, 
     const ImU32 accentSoft = ImGui::GetColorU32(ImVec4(limeAccent.x, limeAccent.y, limeAccent.z, 0.58f));
     const ImU32 accentGlow = ImGui::GetColorU32(ImVec4(limeAccent.x * 0.92f, limeAccent.y * 0.92f, limeAccent.z * 0.92f, 0.22f));
     const ImU32 accentDark = ImGui::GetColorU32(ImVec4(limeAccent.x * 0.26f, limeAccent.y * 0.26f, limeAccent.z * 0.26f, 0.82f));
-    const ImU32 accentBright = ImGui::GetColorU32(ImVec4(0.78f, 1.00f, 0.84f, 0.92f));
+    const ImU32 accentBright = ImGui::GetColorU32(ImVec4(0.85f, 0.83f, 1.00f, 0.92f));
     const ImU32 panelShade = IM_COL32(0, 0, 0, 214);
 
     for (int layer = 5; layer >= 0; --layer) {
@@ -289,7 +286,7 @@ inline void DrawAnimation(ImDrawList* draw, const ImVec2& center, float radius, 
         const float a1 = progressStart + progressSweep * t1;
         const ImVec2 p0(center.x + std::cos(a0) * progressRadius, center.y + std::sin(a0) * progressRadius);
         const ImVec2 p1(center.x + std::cos(a1) * progressRadius, center.y + std::sin(a1) * progressRadius);
-        draw->AddLine(p0, p1, ImGui::GetColorU32(ImVec4(0.78f, 1.00f, 0.84f, 0.40f + 0.24f * t0)), 2.2f);
+        draw->AddLine(p0, p1, ImGui::GetColorU32(ImVec4(0.85f, 0.83f, 1.00f, 0.40f + 0.24f * t0)), 2.2f);
     }
 
     for (int i = 0; i < 10; ++i) {
@@ -347,7 +344,7 @@ inline bool RenderWindow(ImTextureID backgroundTexture = nullptr) {
         const float innerH = innerMax.y - innerMin.y;
 
         draw->AddRectFilled(pos, panelMax, IM_COL32(0, 0, 0, 255), S(18.0f));
-        draw->AddRectFilled(pos, panelMax, IM_COL32(3, 3, 7, 255), S(18.0f));
+        draw->AddRectFilled(pos, panelMax, IM_COL32(5, 5, 5, 255), S(18.0f));
         draw->AddRectFilledMultiColor(
             pos,
             panelMax,
@@ -370,7 +367,7 @@ inline bool RenderWindow(ImTextureID backgroundTexture = nullptr) {
 
         for (float y = innerMin.y + S(110.0f); y < innerMax.y - S(150.0f); y += S(14.0f)) {
             for (float x = innerMin.x + innerW * 0.57f; x < innerMax.x - S(58.0f); x += S(14.0f)) {
-                draw->AddCircleFilled(ImVec2(x, y), S(1.0f), IM_COL32(98, 86, 128, 46), 6);
+                draw->AddCircleFilled(ImVec2(x, y), S(1.0f), IM_COL32(120, 120, 126, 46), 6);
             }
         }
 
@@ -382,9 +379,9 @@ inline bool RenderWindow(ImTextureID backgroundTexture = nullptr) {
 
         const float leftX = innerMin.x + S(42.0f);
         const float topY = innerMin.y + S(42.0f);
-        draw->AddText(labelFont, labelSize * 1.25f, ImVec2(leftX, topY), IM_COL32(170, 165, 196, 245), "AUTHORIZING");
-        draw->AddText(titleFont, F50 ? S(48.0f) : titleFont->FontSize * 2.25f * uiScale, ImVec2(leftX, topY + S(44.0f)), IM_COL32(255, 255, 255, 255), "SESSION");
-        draw->AddText(titleFont, F50 ? S(48.0f) : titleFont->FontSize * 2.25f * uiScale, ImVec2(leftX, topY + S(98.0f)), IM_COL32(255, 255, 255, 245), "DARMODZ V5");
+        draw->AddText(labelFont, labelSize * 1.25f, ImVec2(leftX, topY), IM_COL32(180, 180, 184, 245), "AUTHORIZING");
+        draw->AddText(titleFont, F50 ? S(48.0f) : titleFont->FontSize * 2.25f * uiScale, ImVec2(leftX, topY + S(44.0f)), IM_COL32(235, 235, 235, 255), "SESSION");
+        draw->AddText(titleFont, F50 ? S(48.0f) : titleFont->FontSize * 2.25f * uiScale, ImVec2(leftX, topY + S(98.0f)), IM_COL32(235, 235, 235, 245), "DARMODZ V5");
 
         const ImVec2 orb(innerMin.x + innerW * 0.27f, innerMin.y + innerH * 0.57f);
         const float orbR = std::min(innerW, innerH) * 0.175f;
@@ -419,7 +416,7 @@ inline bool RenderWindow(ImTextureID backgroundTexture = nullptr) {
         drawArc(orbR + S(30.0f), -1.55f + animationTime * 0.35f, 1.05f, IM_COL32(238, 206, 255, 235), S(7.0f), 28);
         drawArc(orbR + S(30.0f), 2.70f + animationTime * 0.35f, 0.82f, ImGui::GetColorU32(ImVec4(limeAccent.x, limeAccent.y, limeAccent.z, 0.78f)), S(5.0f), 24);
         drawArc(orbR + S(16.0f), 0.40f - animationTime * 0.80f, 0.78f, ImGui::GetColorU32(ImVec4(limeAccent.x, limeAccent.y, limeAccent.z, 0.45f)), S(2.0f), 20);
-        drawArc(orbR - S(10.0f), 2.10f + animationTime * 1.10f, 1.20f, ImGui::GetColorU32(ImVec4(0.35f, 1.00f, 0.45f, 0.32f)), S(1.6f), 24);
+        drawArc(orbR - S(10.0f), 2.10f + animationTime * 1.10f, 1.20f, ImGui::GetColorU32(ImVec4(0.42f, 0.39f, 0.80f, 0.32f)), S(1.6f), 24);
         for (int i = 0; i < 64; ++i) {
             if ((i % 3) == 1) {
                 continue;
@@ -436,33 +433,33 @@ inline bool RenderWindow(ImTextureID backgroundTexture = nullptr) {
             const float r1 = r0 + S((i % 4 == 0) ? 14.0f : 7.0f);
             const ImVec2 p0(orb.x + std::cos(ang) * r0, orb.y + std::sin(ang) * r0);
             const ImVec2 p1(orb.x + std::cos(ang) * r1, orb.y + std::sin(ang) * r1);
-            draw->AddLine(p0, p1, ImGui::GetColorU32(ImVec4(0.35f, 1.00f, 0.45f, (i % 4 == 0) ? 0.46f : 0.20f)), S((i % 4 == 0) ? 1.7f : 1.0f));
+            draw->AddLine(p0, p1, ImGui::GetColorU32(ImVec4(0.42f, 0.39f, 0.80f, (i % 4 == 0) ? 0.46f : 0.20f)), S((i % 4 == 0) ? 1.7f : 1.0f));
         }
-        draw->AddCircleFilled(orb, orbR * 0.78f, IM_COL32(18, 9, 36, 242), 128);
+        draw->AddCircleFilled(orb, orbR * 0.78f, IM_COL32(9, 9, 9, 242), 128);
         draw->AddCircle(orb, orbR * 0.78f, ImGui::GetColorU32(ImVec4(limeAccent.x, limeAccent.y, limeAccent.z, 0.72f)), 128, S(2.0f));
-        draw->AddCircle(orb, orbR * (0.28f + pulseCore * 0.035f), ImGui::GetColorU32(ImVec4(0.30f, 1.00f, 0.40f, 0.24f + pulseCore * 0.18f)), 96, S(1.4f));
+        draw->AddCircle(orb, orbR * (0.28f + pulseCore * 0.035f), ImGui::GetColorU32(ImVec4(0.42f, 0.39f, 0.80f, 0.24f + pulseCore * 0.18f)), 96, S(1.4f));
         for (float y = orb.y - orbR * 0.58f; y <= orb.y + orbR * 0.58f; y += S(7.0f)) {
             const float span = std::sqrt(std::max(0.0f, orbR * orbR * 0.34f - (y - orb.y) * (y - orb.y))) * 1.65f;
-            draw->AddLine(ImVec2(orb.x - span, y), ImVec2(orb.x + span, y), IM_COL32(178, 104, 255, 54), S(1.0f));
+            draw->AddLine(ImVec2(orb.x - span, y), ImVec2(orb.x + span, y), IM_COL32(142, 134, 246, 54), S(1.0f));
         }
         for (float x = orb.x - orbR * 0.55f; x <= orb.x + orbR * 0.55f; x += S(10.0f)) {
             const float span = std::sqrt(std::max(0.0f, orbR * orbR * 0.30f - (x - orb.x) * (x - orb.x))) * 1.55f;
-            draw->AddLine(ImVec2(x, orb.y - span), ImVec2(x, orb.y + span), IM_COL32(178, 104, 255, 32), S(1.0f));
+            draw->AddLine(ImVec2(x, orb.y - span), ImVec2(x, orb.y + span), IM_COL32(142, 134, 246, 32), S(1.0f));
         }
         const float scanY = orb.y - orbR * 0.52f + std::fmod(animationTime * S(32.0f), orbR * 1.04f);
         const float scanSpan = std::sqrt(std::max(0.0f, orbR * orbR * 0.34f - (scanY - orb.y) * (scanY - orb.y))) * 1.65f;
-        draw->AddLine(ImVec2(orb.x - scanSpan, scanY), ImVec2(orb.x + scanSpan, scanY), ImGui::GetColorU32(ImVec4(0.40f, 1.00f, 0.50f, 0.45f)), S(1.8f));
+        draw->AddLine(ImVec2(orb.x - scanSpan, scanY), ImVec2(orb.x + scanSpan, scanY), ImGui::GetColorU32(ImVec4(0.557f, 0.525f, 0.965f, 0.45f)), S(1.8f));
         for (int p = 0; p < 28; ++p) {
             const float orbit = orbR * (0.43f + (p % 4) * 0.09f);
             const float ang = animationTime * (0.32f + (p % 5) * 0.035f) + p * 2.39996f;
             const float flicker = 0.45f + 0.55f * std::sin(animationTime * 4.0f + p);
-            draw->AddCircleFilled(ImVec2(orb.x + std::cos(ang) * orbit, orb.y + std::sin(ang) * orbit * 0.72f), S(1.0f + (p % 3) * 0.35f), ImGui::GetColorU32(ImVec4(0.32f, 1.00f, 0.42f, 0.20f + flicker * 0.38f)), 8);
+            draw->AddCircleFilled(ImVec2(orb.x + std::cos(ang) * orbit, orb.y + std::sin(ang) * orbit * 0.72f), S(1.0f + (p % 3) * 0.35f),            ImGui::GetColorU32(ImVec4(0.42f, 0.39f, 0.80f, 0.20f + flicker * 0.38f)), 8);
         }
         const char* coreA = "A";
         const float coreASize = F50 ? S(70.0f) : titleFont->FontSize * 3.2f * uiScale;
         const ImVec2 coreAText = titleFont->CalcTextSizeA(coreASize, FLT_MAX, 0.0f, coreA);
         draw->AddText(titleFont, coreASize, ImVec2(orb.x - coreAText.x * 0.5f, orb.y - coreAText.y * 0.5f + S(1.5f)), ImGui::GetColorU32(ImVec4(limeAccent.x, limeAccent.y, limeAccent.z, 0.34f)), coreA);
-        draw->AddText(titleFont, coreASize, ImVec2(orb.x - coreAText.x * 0.5f, orb.y - coreAText.y * 0.5f), IM_COL32(245, 235, 255, 255), coreA);
+        draw->AddText(titleFont, coreASize, ImVec2(orb.x - coreAText.x * 0.5f, orb.y - coreAText.y * 0.5f), IM_COL32(235, 235, 235, 255), coreA);
 
         auto statusFor = [&](float start, float end) -> int {
             if (progress >= end) return 2;
@@ -504,7 +501,7 @@ inline bool RenderWindow(ImTextureID backgroundTexture = nullptr) {
             const float w = innerW * 0.43f;
             const float h = cardH;
             ImVec2 a(x, y), b(x + w, y + h);
-            const ImU32 fill = state == 0 ? IM_COL32(9, 9, 14, 130) : IM_COL32(13, 13, 20, 220);
+            const ImU32 fill = state == 0 ? IM_COL32(9, 9, 9, 130) : IM_COL32(14, 14, 14, 220);
             const ImU32 border = state == 1 ? ImGui::GetColorU32(limeAccent) : IM_COL32(112, 115, 132, state == 0 ? 70 : 135);
             if (state == 1) {
                 for (int glow = 3; glow >= 1; --glow) {
@@ -514,9 +511,8 @@ inline bool RenderWindow(ImTextureID backgroundTexture = nullptr) {
             drawCutPanel(a, b, S(14.0f), fill, border, state == 1 ? S(2.0f) : S(1.0f));
             ImVec2 cc(a.x + S(42.0f), a.y + h * 0.5f);
             draw->AddCircle(cc, S(22.0f), state == 0 ? IM_COL32(92, 94, 110, 120) : ImGui::GetColorU32(limeAccent), 36, S(2.0f));
-            drawStatusIcon(cc, idx, state);
-            draw->AddText(labelFont, bodySize * 0.88f, ImVec2(a.x + S(78.0f), a.y + S(21.0f)), state == 0 ? IM_COL32(120, 122, 140, 170) : IM_COL32(245, 245, 250, 250), title);
-            draw->AddText(labelFont, labelSize * 0.80f, ImVec2(a.x + S(78.0f), a.y + S(45.0f)), state == 0 ? IM_COL32(105, 108, 126, 150) : IM_COL32(198, 200, 214, 230), desc);
+            drawStatusIcon(cc, idx, state);                    draw->AddText(labelFont, bodySize * 0.88f, ImVec2(a.x + S(78.0f), a.y + S(21.0f)), state == 0 ? IM_COL32(120, 122, 140, 170) : IM_COL32(235, 235, 235, 250), title);
+                    draw->AddText(labelFont, labelSize * 0.80f, ImVec2(a.x + S(78.0f), a.y + S(45.0f)), state == 0 ? IM_COL32(105, 108, 126, 150) : IM_COL32(180, 180, 184, 230), desc);
             const char* stateText = state == 2 ? "COMPLETE" : (state == 1 ? "IN PROGRESS" : "PENDING");
             const float stateSize = labelSize * 0.72f;
             ImVec2 ts = labelFont->CalcTextSizeA(stateSize, FLT_MAX, 0.0f, stateText);
@@ -559,11 +555,11 @@ inline bool RenderWindow(ImTextureID backgroundTexture = nullptr) {
                 ImVec2(detailX, detailY),
                 ImVec2(detailX + detailW, detailY + detailH),
                 S(10.0f),
-                IM_COL32(8, 8, 13, 215),
-                IM_COL32(91, 78, 122, 95),
+                IM_COL32(8, 8, 8, 215),
+                IM_COL32(45, 45, 45, 95),
                 S(1.0f)
             );
-            draw->AddText(labelFont, labelSize * 0.66f, ImVec2(detailX + S(14.0f), detailY + S(9.0f)), IM_COL32(175, 169, 205, 220), "SECURE CHANNEL");
+            draw->AddText(labelFont, labelSize * 0.66f, ImVec2(detailX + S(14.0f), detailY + S(9.0f)), IM_COL32(180, 180, 184, 220), "SECURE CHANNEL");
             const char* detailMode = "SYNC ACTIVE";
             ImVec2 detailModeSize = labelFont->CalcTextSizeA(labelSize * 0.62f, FLT_MAX, 0.0f, detailMode);
             draw->AddText(labelFont, labelSize * 0.62f, ImVec2(detailX + detailW - detailModeSize.x - S(14.0f), detailY + S(9.0f)), ImGui::GetColorU32(limeAccent), detailMode);
@@ -572,15 +568,15 @@ inline bool RenderWindow(ImTextureID backgroundTexture = nullptr) {
             auto detailChip = [&](int idx, const char* label, const char* value, float phase) {
                 const ImVec2 a(detailX + S(14.0f) + idx * (chipW + chipGap), detailY + S(30.0f));
                 const ImVec2 b(a.x + chipW, detailY + detailH - S(12.0f));
-                draw->AddRectFilled(a, b, IM_COL32(18, 16, 25, 185), S(5.0f));
-                draw->AddRect(a, b, IM_COL32(116, 84, 166, 105), S(5.0f), 0, S(1.0f));
+                draw->AddRectFilled(a, b, IM_COL32(14, 14, 14, 185), S(5.0f));
+                draw->AddRect(a, b, IM_COL32(45, 45, 45, 140), S(5.0f), 0, S(1.0f));
                 const ImVec2 dot(a.x + S(12.0f), a.y + S(13.0f));
                 const float pulse = 0.55f + 0.45f * std::sin(animationTime * 2.8f + phase);
                 draw->AddCircleFilled(dot, S(3.5f), ImGui::GetColorU32(ImVec4(limeAccent.x, limeAccent.y, limeAccent.z, 0.55f + pulse * 0.35f)), 12);
-                draw->AddText(labelFont, labelSize * 0.56f, ImVec2(a.x + S(23.0f), a.y + S(7.0f)), IM_COL32(145, 146, 166, 220), label);
-                draw->AddText(labelFont, bodySize * 0.62f, ImVec2(a.x + S(10.0f), a.y + S(24.0f)), IM_COL32(238, 236, 248, 238), value);
+                draw->AddText(labelFont, labelSize * 0.56f, ImVec2(a.x + S(23.0f), a.y + S(7.0f)), IM_COL32(142, 142, 148, 220), label);
+                draw->AddText(labelFont, bodySize * 0.62f, ImVec2(a.x + S(10.0f), a.y + S(24.0f)), IM_COL32(235, 235, 235, 238), value);
                 const float railY = b.y - S(10.0f);
-                draw->AddRectFilled(ImVec2(a.x + S(10.0f), railY), ImVec2(b.x - S(10.0f), railY + S(3.0f)), IM_COL32(30, 28, 39, 255), S(2.0f));
+                draw->AddRectFilled(ImVec2(a.x + S(10.0f), railY), ImVec2(b.x - S(10.0f), railY + S(3.0f)), IM_COL32(22, 22, 22, 255), S(2.0f));
                 draw->AddRectFilled(ImVec2(a.x + S(10.0f), railY), ImVec2(a.x + S(10.0f) + (chipW - S(20.0f)) * (0.45f + 0.25f * pulse), railY + S(3.0f)), ImGui::GetColorU32(limeAccent), S(2.0f));
             };
             detailChip(0, "NODE", "DARMODZ V5", 0.0f);
@@ -588,8 +584,8 @@ inline bool RenderWindow(ImTextureID backgroundTexture = nullptr) {
             detailChip(2, "PACKETS", "4096", 2.4f);
         }
 
-        draw->AddRectFilled(barMin, barMax, IM_COL32(9, 9, 15, 245), S(8.0f));
-        draw->AddRect(barMin, barMax, IM_COL32(88, 72, 126, 95), S(8.0f));
+        draw->AddRectFilled(barMin, barMax, IM_COL32(9, 9, 9, 245), S(8.0f));
+        draw->AddRect(barMin, barMax, IM_COL32(45, 45, 45, 140), S(8.0f));
         const float footerW = barMax.x - barMin.x;
         const float footerSlot = footerW * 0.25f;
         auto footer = [&](int col, int iconType, const char* a, const char* b) {
@@ -616,8 +612,8 @@ inline bool RenderWindow(ImTextureID backgroundTexture = nullptr) {
                 draw->AddLine(fc, ImVec2(fc.x, fc.y - S(5.5f)), footerAccent, S(1.8f));
                 draw->AddLine(fc, ImVec2(fc.x + S(4.5f), fc.y + S(2.5f)), footerAccent, S(1.8f));
             }
-            draw->AddText(labelFont, labelSize * 0.70f, ImVec2(x + S(30.0f), barMin.y + S(16.0f)), IM_COL32(196, 198, 214, 230), a);
-            draw->AddText(labelFont, bodySize * 0.68f, ImVec2(x + S(30.0f), barMin.y + S(35.0f)), IM_COL32(255, 255, 255, 242), b);
+            draw->AddText(labelFont, labelSize * 0.70f, ImVec2(x + S(30.0f), barMin.y + S(16.0f)), IM_COL32(180, 180, 184, 230), a);
+            draw->AddText(labelFont, bodySize * 0.68f, ImVec2(x + S(30.0f), barMin.y + S(35.0f)), IM_COL32(235, 235, 235, 242), b);
         };
         footer(0, 0, "SYSTEM STATUS", "SECURE CONNECTION");
         footer(1, 1, "NETWORK", "ENCRYPTED");

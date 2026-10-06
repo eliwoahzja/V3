@@ -109,26 +109,25 @@ inline void Render(ImDrawList* draw, float screenWidth, float screenHeight) {
 
     // --- CYBERPUNK BACKGROUND EFFECTS ---
     // 1. Ambient Glow
-    draw->AddRectFilled(ImVec2(boxX - 4.0f, boxY - 4.0f), ImVec2(boxX + boxW + 4.0f, boxY + boxH + 4.0f), ImColor(0, 255, 255, 15), 12.0f * c::scale);
+    draw->AddRectFilled(ImVec2(boxX - 4.0f, boxY - 4.0f), ImVec2(boxX + boxW + 4.0f, boxY + boxH + 4.0f), ImColor((int)(menu[0] * 255), (int)(menu[1] * 255), (int)(menu[2] * 255), 15), 12.0f * c::scale);
     
     // 2. Main Background (Dark Cyberpunk)
-    draw->AddRectFilled(ImVec2(boxX, boxY), ImVec2(boxX + boxW, boxY + boxH), ImColor(8, 8, 12, 245), 10.0f * c::scale);
+    draw->AddRectFilled(ImVec2(boxX, boxY), ImVec2(boxX + boxW, boxY + boxH), ImColor(8, 8, 8, 245), 10.0f * c::scale);
 
     // 3. Moving "Scanning" Horizontal Lines
     static float scanY = 0.0f;
     scanY += ImGui::GetIO().DeltaTime * 80.0f;
     if (scanY > boxH) scanY = 0.0f;
-    draw->AddLine(ImVec2(boxX, boxY + scanY), ImVec2(boxX + boxW, boxY + scanY), ImColor(0, 255, 255, 20), 1.0f);
+    draw->AddLine(ImVec2(boxX, boxY + scanY), ImVec2(boxX + boxW, boxY + scanY), ImColor((int)(menu[0] * 255), (int)(menu[1] * 255), (int)(menu[2] * 255), 20), 1.0f);
 
     // 4. Floating Background Particles
     for (int i = 0; i < 12; ++i) {
         float pX = boxX + (std::sin(animTime * 0.5f + i * 1.3f) * 0.5f + 0.5f) * boxW;
         float pY = boxY + (std::cos(animTime * 0.7f + i * 2.1f) * 0.5f + 0.5f) * boxH;
-        draw->AddCircleFilled(ImVec2(pX, pY), 1.0f, ImColor(0, 255, 255, 40));
+        draw->AddCircleFilled(ImVec2(pX, pY), 1.0f, ImColor((int)(menu[0] * 255), (int)(menu[1] * 255), (int)(menu[2] * 255), 40));
     }
 
-    // 5. Animated Glowing Border (Rotating Colors)
-    ImColor borderColor = GetNeonColor(animTime, 2.0f, 0.0f);
+    ImColor borderColor((int)(menu[0] * 255), (int)(menu[1] * 255), (int)(menu[2] * 255), 255);
     draw->AddRect(ImVec2(boxX, boxY), ImVec2(boxX + boxW, boxY + boxH), borderColor, 10.0f * c::scale, 0, 1.8f * c::scale);
     // FIXED: Convert alpha to float to avoid ambiguous constructor call
     draw->AddRect(ImVec2(boxX - 2.0f, boxY - 2.0f), ImVec2(boxX + boxW + 2.0f, boxY + boxH + 2.0f), ImColor(borderColor.Value.x, borderColor.Value.y, borderColor.Value.z, 60.0f / 255.0f), 12.0f * c::scale, 0, 1.0f);
@@ -156,10 +155,10 @@ inline void Render(ImDrawList* draw, float screenWidth, float screenHeight) {
     };
 
     // --- DRAWING THE INTERFACE ---
-    ImColor neonPurple = GetNeonColor(animTime, 1.5f, 0.0f);
-    ImColor neonCyan = GetNeonColor(animTime, 1.5f, 2.0f);
-    ImColor neonPink = GetNeonColor(animTime, 1.5f, 4.0f);
-    ImColor pureWhite = ImColor(255, 255, 255, 255);
+    ImColor neonPurple((int)(menu[0] * 255), (int)(menu[1] * 255), (int)(menu[2] * 255), 255);
+    ImColor neonCyan((int)(menu[0] * 255), (int)(menu[1] * 255), (int)(menu[2] * 255), 255);
+    ImColor neonPink(142, 142, 148, 255);
+    ImColor pureWhite(235, 235, 235, 255);
 
     // 1. Header (Neon Purple)
     drawTextWithSpacing("DARMODZ V35", ImVec2(textStartX, startY), neonPurple, 1.4f);
@@ -170,7 +169,7 @@ inline void Render(ImDrawList* draw, float screenWidth, float screenHeight) {
     ImVec2 dotPos = ImVec2(textEndX - deluxeTextWidth - (8.0f * c::scale), startY + (6.0f * c::scale));
     
     draw->AddCircleFilled(dotPos, dotRadius, neonCyan);
-    draw->AddCircle(dotPos, dotRadius + (1.5f * c::scale), ImColor(0, 255, 255, 50), 0, 1.0f);
+    draw->AddCircle(dotPos, dotRadius + (1.5f * c::scale), ImColor((int)(menu[0] * 255), (int)(menu[1] * 255), (int)(menu[2] * 255), 50), 0, 1.0f);
 
     drawTextWithSpacing("DELUXE", ImVec2(textEndX, startY), neonCyan, 1.4f, true);
     

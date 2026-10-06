@@ -138,7 +138,7 @@ inline void DrawPopupBackdropFocusLayer(ImDrawList *drawList) {
         ImClamp(g_popupFocusMax.x, 0.0f, viewportMax.x),
         ImClamp(g_popupFocusMax.y, 0.0f, viewportMax.y)
     );
-    const ImU32 dimColor = IM_COL32(8, 0, 14, 172);
+    const ImU32 dimColor = IM_COL32(0, 0, 0, 172);
 
     if (holeMin.y > 0.0f) drawList->AddRectFilled(ImVec2(0.0f, 0.0f), ImVec2(viewportMax.x, holeMin.y), dimColor);
     if (holeMin.x > 0.0f) drawList->AddRectFilled(ImVec2(0.0f, holeMin.y), ImVec2(holeMin.x, holeMax.y), dimColor);
@@ -490,8 +490,8 @@ inline bool DrawRuntimeSidebarButton(const char *id, const char *icon, const cha
     ImFont *textFont = font::inter_semibold ? font::inter_semibold : ImGui::GetFont();
     const float iconSize = 18.0f;
     const float textSize = 14.0f;
-    const ImU32 iconColor = active ? main_runtime_theme::GetAccentU32(1.0f) : IM_COL32(210, 214, 226, 210);
-    const ImU32 textColor = active ? IM_COL32(245, 245, 250, 255) : IM_COL32(190, 196, 212, 220);
+    const ImU32 iconColor = active ? main_runtime_theme::GetAccentU32(1.0f) : IM_COL32(180, 180, 184, 210);
+    const ImU32 textColor = active ? IM_COL32(235, 235, 235, 255) : IM_COL32(180, 180, 184, 235);
 
     if (icon != nullptr && iconFont != nullptr) {
         const ImVec2 is = iconFont->CalcTextSizeA(iconSize, FLT_MAX, 0.0f, icon);
@@ -511,8 +511,8 @@ inline bool DrawRuntimeSidebarButton(const char *id, const char *icon, const cha
 inline void DrawRuntimeEspPreviewPanel(const ImVec2 &min, const ImVec2 &size) {
     ImDrawList *drawList = ImGui::GetWindowDrawList();
     const ImVec2 max = min + size;
-    drawList->AddRectFilled(min, max, IM_COL32(10, 14, 24, 235), 10.0f);
-    drawList->AddRect(min, max, main_runtime_theme::GetAccentTintU32(0.65f, 0.75f), 10.0f, 0, 1.0f);
+    drawList->AddRectFilled(min, max, IM_COL32(14, 14, 14, 245), 10.0f);
+    drawList->AddRect(min, max, IM_COL32(45, 45, 45, 220), 10.0f, 0, 1.0f);
 
     ImFont *textFont = font::inter_semibold ? font::inter_semibold : ImGui::GetFont();
     const float titleSize = 15.0f;
@@ -523,12 +523,12 @@ inline void DrawRuntimeEspPreviewPanel(const ImVec2 &min, const ImVec2 &size) {
 
     const ImVec2 previewMin(min.x + 12.0f, min.y + 42.0f);
     const ImVec2 previewMax(max.x - 12.0f, max.y - 14.0f);
-    drawList->AddRectFilled(previewMin, previewMax, IM_COL32(24, 31, 42, 235), 7.0f);
+    drawList->AddRectFilled(previewMin, previewMax, IM_COL32(22, 22, 22, 245), 7.0f);
 
     // Lightweight visual-only preview. It does not read or modify gameplay state.
     const float groundY = previewMax.y - 34.0f;
-    drawList->AddRectFilled(ImVec2(previewMin.x, groundY), previewMax, IM_COL32(18, 26, 30, 255), 0.0f);
-    drawList->AddLine(ImVec2(previewMin.x, groundY), ImVec2(previewMax.x, groundY), IM_COL32(80, 92, 108, 180), 1.0f);
+    drawList->AddRectFilled(ImVec2(previewMin.x, groundY), previewMax, IM_COL32(17, 17, 17, 255), 0.0f);
+    drawList->AddLine(ImVec2(previewMin.x, groundY), ImVec2(previewMax.x, groundY), IM_COL32(45, 45, 45, 220), 1.0f);
 
     const ImVec2 boxCenter((previewMin.x + previewMax.x) * 0.5f, (previewMin.y + groundY) * 0.5f + 8.0f);
     const float boxW = ImMin(58.0f, (previewMax.x - previewMin.x) * 0.42f);

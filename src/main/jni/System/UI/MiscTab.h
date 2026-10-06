@@ -66,11 +66,11 @@ namespace misc_tab
         const bool held = ImGui::IsItemActive();
 
         ImDrawList *drawList = ImGui::GetWindowDrawList();
-        ImU32 bg = IM_COL32(10, 12, 18, active ? 232 : 205);
-        if (!active && hovered) bg = IM_COL32(16, 18, 26, 220);
-        if (!active && held) bg = IM_COL32(20, 22, 32, 230);
-        if (active && hovered) bg = IM_COL32(14, 16, 24, 245);
-        if (active && held) bg = IM_COL32(8, 10, 16, 250);
+        ImU32 bg = IM_COL32(14, 14, 14, active ? 232 : 205);
+        if (!active && hovered) bg = IM_COL32(22, 22, 22, 220);
+        if (!active && held) bg = IM_COL32(31, 31, 31, 230);
+        if (active && hovered) bg = IM_COL32(17, 17, 17, 245);
+        if (active && held) bg = IM_COL32(5, 5, 5, 250);
 
         const ImU32 border = active
             ? ImGui::GetColorU32(ImVec4(c::accent.x, c::accent.y, c::accent.z, 0.82f))
@@ -137,8 +137,8 @@ namespace misc_tab
 
     inline void DrawPriceSummary(const char *tableId)
     {
-        ImGui::PushStyleColor(ImGuiCol_TableRowBg, ImVec4(0.05f, 0.06f, 0.08f, 0.42f));
-        ImGui::PushStyleColor(ImGuiCol_TableRowBgAlt, ImVec4(0.08f, 0.09f, 0.12f, 0.56f));
+        ImGui::PushStyleColor(ImGuiCol_TableRowBg, ImVec4(0.055f, 0.055f, 0.055f, 0.42f));
+        ImGui::PushStyleColor(ImGuiCol_TableRowBgAlt, ImVec4(0.086f, 0.086f, 0.086f, 0.56f));
         ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(1.0f, 1.0f, 1.0f, 0.06f));
         if (ImGui::BeginTable(tableId, 3, ImGuiTableFlags_SizingStretchProp | ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_NoSavedSettings))
         {
@@ -152,9 +152,9 @@ namespace misc_tab
                 ImGui::TableSetColumnIndex(0);
                 ImGui::TextColored(ImVec4(0.93f, 0.95f, 0.98f, 0.95f), "%s", duration);
                 ImGui::TableSetColumnIndex(1);
-                ImGui::TextColored(ImVec4(0.94f, 0.82f, 0.56f, 0.96f), "%s", php);
+                ImGui::TextColored(ImVec4(0.557f, 0.525f, 0.965f, 0.96f), "%s", php);
                 ImGui::TableSetColumnIndex(2);
-                ImGui::TextColored(ImVec4(0.60f, 0.95f, 0.74f, 0.96f), "%s", usd);
+                ImGui::TextColored(ImVec4(0.557f, 0.525f, 0.965f, 0.96f), "%s", usd);
             };
 
             drawRow("7 DAYS", "100PHP", "$2");

@@ -82,7 +82,7 @@ namespace custom
                 drawList->AddRectFilled(
                     slotMin,
                     slotMax,
-                    active ? ImGui::GetColorU32(main_runtime_theme::GetActiveTabBackgroundColor()) : IM_COL32(18, 20, 29, 150),
+                    active ? ImGui::GetColorU32(main_runtime_theme::GetActiveTabBackgroundColor()) : IM_COL32(31, 31, 31, 200),
                     9.0f
                 );
             }
@@ -94,7 +94,7 @@ namespace custom
                 iconFont,
                 iconSize,
                 ImVec2(slotMin.x + (slotSide - iconTextSize.x) * 0.5f, slotMin.y + (slotSide - iconTextSize.y) * 0.5f),
-                active ? main_runtime_theme::GetAccentTintU32(0.98f, 1.0f) : IM_COL32(154, 160, 182, hovered ? 245 : 220),
+                active ? main_runtime_theme::GetAccentTintU32(0.98f, 1.0f) : IM_COL32(180, 180, 184, hovered ? 255 : 220),
                 icon
             );
 
@@ -126,7 +126,7 @@ namespace custom
                 drawList->AddText(
                     titleFont, titleFontSize,
                     ImVec2(startX, textY),
-                    IM_COL32(228, 213, 185, 255),
+                    IM_COL32(235, 235, 235, 255),
                     title, pipe
                 );
 
@@ -165,7 +165,7 @@ namespace custom
                 drawList->AddText(
                     titleFont, titleFontSize,
                     ImVec2(min.x + 14.0f, min.y + (size.y - titleSize.y) * 0.5f - 1.0f),
-                    IM_COL32(228, 213, 185, 255),
+                    IM_COL32(235, 235, 235, 255),
                     title
                 );
             }
@@ -197,7 +197,7 @@ namespace custom
             drawList->AddRectFilled(
                 ImVec2(trackMin.x - 4.0f, trackMin.y - 4.0f),
                 ImVec2(trackMax.x + 4.0f, trackMax.y + 4.0f),
-                IM_COL32(8, 9, 14, 220),
+                IM_COL32(5, 5, 5, 235),
                 5.0f
             );
 
@@ -218,7 +218,7 @@ namespace custom
                     ImGui::ColorConvertFloat4ToU32(ImVec4(r0, g0, b0, 1.0f))
                 );
             }
-            drawList->AddRect(trackMin, trackMax, IM_COL32(64, 67, 79, 220), 4.0f, 0, 1.0f);
+            drawList->AddRect(trackMin, trackMax, IM_COL32(45, 45, 45, 220), 4.0f, 0, 1.0f);
 
             const float knobX = ImLerp(trackMin.x, trackMax.x, main_runtime_theme::g_menuHue);
             const float knobHalfWidth = active ? 4.0f : 3.5f;
@@ -236,7 +236,7 @@ namespace custom
             drawList->AddRectFilled(
                 ImVec2(knobCenter.x - 1.0f, knobMin.y + 2.0f),
                 ImVec2(knobCenter.x + 1.0f, knobMax.y - 2.0f),
-                IM_COL32(246, 247, 251, 235),
+                IM_COL32(235, 235, 235, 235),
                 1.0f
             );
 
@@ -272,7 +272,7 @@ namespace custom
                 iconFont,
                 iconFontSize,
                 ImVec2(min.x + (size.x - iconSize.x) * 0.5f, min.y + (size.y - iconSize.y) * 0.5f - 1.0f),
-                hovered ? main_runtime_theme::GetAccentU32() : IM_COL32(238, 241, 249, 255),
+                hovered ? main_runtime_theme::GetAccentU32() : IM_COL32(235, 235, 235, 255),
                 powerIcon
             );
 
@@ -1218,7 +1218,7 @@ namespace custom
             MarkItemEdited(id);
         }
 
-        const ImVec4 target_background = *v ? AccentShade(0.12f, 0.98f) : hovered ? ImVec4(0.10f, 0.11f, 0.15f, 0.96f) : ImVec4(0.07f, 0.08f, 0.11f, 0.94f);
+        const ImVec4 target_background = *v ? AccentShade(0.12f, 0.98f) : hovered ? ImVec4(0.10f, 0.10f, 0.10f, 0.96f) : ImVec4(0.055f, 0.055f, 0.055f, 0.94f);
         const ImVec4 target_text = *v ? c::text::text_active : hovered ? c::text::text_hov : c::text::text_active;
         it_anim->second.background = ImLerp(it_anim->second.background, target_background, g.IO.DeltaTime * 10.0f);
         it_anim->second.text = ImLerp(it_anim->second.text, target_text, g.IO.DeltaTime * 10.0f);
@@ -1255,7 +1255,7 @@ namespace custom
         }
 
         const ImVec4 off_left = ImVec4(0.16f, 0.16f, 0.18f, 0.82f);
-        const ImVec4 off_right = ImVec4(0.07f, 0.08f, 0.10f, 0.90f);
+        const ImVec4 off_right = ImVec4(0.055f, 0.055f, 0.055f, 0.90f);
         const ImVec4 on_left = AccentLift(0.14f, 0.94f);
         const ImVec4 on_right = AccentShade(0.72f, 0.96f);
         const ImVec4 left_fill = MixColor(off_left, on_left, it_anim->second.alpha_mark);
@@ -1824,7 +1824,7 @@ namespace custom
         const bool popup_selectable = (window->Flags & ImGuiWindowFlags_Popup) != 0;
         const ImVec4 selectable_fill = popup_selectable
             ? (selected ? AccentShade(0.76f, 0.26f) : hovered ? ImVec4(0.0f, 0.0f, 0.0f, 0.76f) : ImVec4(0.0f, 0.0f, 0.0f, 0.48f))
-            : (selected ? AccentShade(0.18f, 0.30f) : hovered ? ImVec4(0.08f, 0.09f, 0.13f, 0.72f) : ImVec4(0.05f, 0.06f, 0.09f, 0.42f));
+            : (selected ? AccentShade(0.18f, 0.30f) : hovered ? ImVec4(0.086f, 0.086f, 0.086f, 0.72f) : ImVec4(0.055f, 0.055f, 0.055f, 0.42f));
 
         GetWindowDrawList()->AddRectFilled(
             bb.Min,

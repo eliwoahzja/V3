@@ -17,22 +17,20 @@ namespace c
 {
     inline float scale = 1.5f;
     inline float widget_scale = 1.0f;
-    // Accent: warm amber
-    inline ImVec4 accent = ImColor(210, 134, 10);
-    inline ImVec4 separator = ImColor(38, 42, 46);
+    inline ImVec4 accent = ImColor(142, 134, 246);
+    inline ImVec4 separator = ImColor(45, 45, 45);
 
     namespace bg
     {
-        // Deep warm slate
-        inline ImVec4 background = ImColor(15, 20, 24);
+        inline ImVec4 background = ImColor(5, 5, 5);
         inline ImVec2 size = ImVec2(450, 370);
         inline float rounding = 6.f;
     }
 
     namespace child
     {
-        inline ImVec4 background = ImColor(22, 29, 34);
-        inline ImVec4 cap = ImColor(30, 38, 44);
+        inline ImVec4 background = ImColor(14, 14, 14);
+        inline ImVec4 cap = ImColor(17, 17, 17);
         inline float rounding = 6.f;
         inline float padding = 13.f;
         inline float spacing = 13.f;
@@ -40,53 +38,53 @@ namespace c
 
     namespace page
     {
-        inline ImVec4 background_active = ImColor(44, 54, 62);
-        inline ImVec4 background = ImColor(28, 36, 42);
+        inline ImVec4 background_active = ImColor(31, 31, 31);
+        inline ImVec4 background = ImColor(14, 14, 14);
 
-        inline ImVec4 text_hov = ImColor(185, 162, 110);
-        inline ImVec4 text = ImColor(110, 100, 80);
+        inline ImVec4 text_hov = ImColor(235, 235, 235);
+        inline ImVec4 text = ImColor(142, 142, 148);
 
         inline float rounding = 4.f;
     }
 
     namespace elements
     {
-        inline ImVec4 background_hovered = ImColor(40, 50, 58);
-        inline ImVec4 background = ImColor(28, 36, 42);
+        inline ImVec4 background_hovered = ImColor(31, 31, 31);
+        inline ImVec4 background = ImColor(17, 17, 17);
         inline float rounding = 4.f;
     }
 
     namespace checkbox
     {
-        inline ImVec4 mark = ImColor(15, 20, 24);
-        inline ImVec4 background_on = ImColor(210, 134, 10);
-        inline ImVec4 background_off = ImColor(44, 54, 62);
-        inline ImVec4 circle_inactive = ImColor(90, 100, 110);
+        inline ImVec4 mark = ImColor(5, 5, 5);
+        inline ImVec4 background_on = ImColor(142, 134, 246);
+        inline ImVec4 background_off = ImColor(31, 31, 31);
+        inline ImVec4 circle_inactive = ImColor(110, 110, 116);
         inline float rounding = 4.f;
     }
 
     namespace text
     {
-        inline ImVec4 text_active = ImColor(228, 213, 185);
-        inline ImVec4 text_hov = ImColor(185, 162, 110);
-        inline ImVec4 text = ImColor(112, 102, 82);
+        inline ImVec4 text_active = ImColor(235, 235, 235);
+        inline ImVec4 text_hov = ImColor(142, 134, 246);
+        inline ImVec4 text = ImColor(142, 142, 148);
     }
 
     namespace widget
     {
         inline ImVec2 size = ImVec2(0, 34.f);
-        inline ImVec4 background = ImColor(28, 36, 42);
-        inline ImVec4 outlinecolor = ImColor(50, 60, 68);
+        inline ImVec4 background = ImColor(17, 17, 17);
+        inline ImVec4 outlinecolor = ImColor(45, 45, 45);
         inline float rounding = 4.f;
         inline float outline = 1.f;
     }
 
     namespace button
     {
-        inline ImVec4 background = ImColor(28, 36, 42);
-        inline ImVec4 background_hovered = ImColor(40, 50, 58);
-        inline ImVec4 background_active = ImColor(52, 64, 72);
-        inline ImVec4 outline = ImColor(60, 72, 82);
+        inline ImVec4 background = ImColor(22, 22, 22);
+        inline ImVec4 background_hovered = ImColor(31, 31, 31);
+        inline ImVec4 background_active = ImColor(45, 45, 45);
+        inline ImVec4 outline = ImColor(45, 45, 45);
         inline float rounding = 4.f;
     }
 
@@ -113,86 +111,85 @@ namespace c
 
     inline void UpdateTheme(bool dark_mode, const float* accent_rgba, float dt)
     {
-        bg::background = ImLerp(bg::background, dark_mode ? ImColor(15, 15, 15) : ImColor(255, 255, 255), dt * 12.0f);
-        separator = ImLerp(separator, dark_mode ? ImColor(22, 23, 26) : ImColor(222, 228, 244), dt * 12.0f);
+        bg::background = ImLerp(bg::background, dark_mode ? ImColor(5, 5, 5) : ImColor(255, 255, 255), dt * 12.0f);
+        separator = ImLerp(separator, dark_mode ? ImColor(45, 45, 45) : ImColor(222, 228, 244), dt * 12.0f);
 
         const ImVec4 accent_target = dark_mode
-            ? (accent_rgba ? ImVec4(accent_rgba[0], accent_rgba[1], accent_rgba[2], 1.0f) : ImColor(118, 187, 117).Value)
+            ? (accent_rgba ? ImVec4(accent_rgba[0], accent_rgba[1], accent_rgba[2], 1.0f) : ImColor(142, 134, 246).Value)
             : ImColor(121, 131, 207).Value;
         accent = ImLerp(accent, accent_target, dt * 12.0f);
 
-        elements::background_hovered = ImLerp(elements::background_hovered, dark_mode ? ImColor(31, 33, 38) : ImColor(197, 207, 232), dt * 25.0f);
-        elements::background = ImLerp(elements::background, dark_mode ? ImColor(22, 23, 25) : ImColor(222, 228, 244), dt * 25.0f);
+        elements::background_hovered = ImLerp(elements::background_hovered, dark_mode ? ImColor(31, 31, 31) : ImColor(197, 207, 232), dt * 25.0f);
+        elements::background = ImLerp(elements::background, dark_mode ? ImColor(17, 17, 17) : ImColor(222, 228, 244), dt * 25.0f);
 
-        widget::background = ImLerp(widget::background, dark_mode ? ImColor(22, 23, 25) : ImColor(236, 240, 250), dt * 25.0f);
-        widget::outlinecolor = ImLerp(widget::outlinecolor, dark_mode ? ImColor(30, 32, 36) : ImColor(194, 204, 228), dt * 25.0f);
-        button::background = ImLerp(button::background, dark_mode ? ImColor(22, 23, 25) : ImColor(236, 240, 250), dt * 25.0f);
-        button::background_hovered = ImLerp(button::background_hovered, dark_mode ? ImColor(31, 33, 38) : ImColor(213, 222, 242), dt * 25.0f);
-        button::background_active = ImLerp(button::background_active, dark_mode ? ImColor(40, 42, 48) : ImColor(196, 206, 232), dt * 25.0f);
-        button::outline = ImLerp(button::outline, dark_mode ? ImColor(50, 52, 56) : ImColor(177, 188, 217), dt * 25.0f);
+        widget::background = ImLerp(widget::background, dark_mode ? ImColor(17, 17, 17) : ImColor(236, 240, 250), dt * 25.0f);
+        widget::outlinecolor = ImLerp(widget::outlinecolor, dark_mode ? ImColor(45, 45, 45) : ImColor(194, 204, 228), dt * 25.0f);
+        button::background = ImLerp(button::background, dark_mode ? ImColor(22, 22, 22) : ImColor(236, 240, 250), dt * 25.0f);
+        button::background_hovered = ImLerp(button::background_hovered, dark_mode ? ImColor(31, 31, 31) : ImColor(213, 222, 242), dt * 25.0f);
+        button::background_active = ImLerp(button::background_active, dark_mode ? ImColor(45, 45, 45) : ImColor(196, 206, 232), dt * 25.0f);
+        button::outline = ImLerp(button::outline, dark_mode ? ImColor(45, 45, 45) : ImColor(177, 188, 217), dt * 25.0f);
 
-        checkbox::mark = ImLerp(checkbox::mark, dark_mode ? ImColor(0, 0, 0) : ImColor(255, 255, 255), dt * 12.0f);
-        checkbox::background_off = ImLerp(checkbox::background_off, dark_mode ? ImColor(40, 42, 48) : ImColor(205, 214, 236), dt * 25.0f);
-        checkbox::circle_inactive = ImLerp(checkbox::circle_inactive, dark_mode ? ImColor(80, 84, 96) : ImColor(120, 130, 158), dt * 25.0f);
+        checkbox::mark = ImLerp(checkbox::mark, dark_mode ? ImColor(5, 5, 5) : ImColor(255, 255, 255), dt * 12.0f);
+        checkbox::background_off = ImLerp(checkbox::background_off, dark_mode ? ImColor(31, 31, 31) : ImColor(205, 214, 236), dt * 25.0f);
+        checkbox::circle_inactive = ImLerp(checkbox::circle_inactive, dark_mode ? ImColor(110, 110, 116) : ImColor(120, 130, 158), dt * 25.0f);
 
-        child::background = ImLerp(child::background, dark_mode ? ImColor(17, 17, 18) : ImColor(241, 243, 249), dt * 12.0f);
-        child::cap = ImLerp(child::cap, dark_mode ? ImColor(20, 21, 23) : ImColor(228, 235, 248), dt * 12.0f);
+        child::background = ImLerp(child::background, dark_mode ? ImColor(14, 14, 14) : ImColor(241, 243, 249), dt * 12.0f);
+        child::cap = ImLerp(child::cap, dark_mode ? ImColor(17, 17, 17) : ImColor(228, 235, 248), dt * 12.0f);
         child::padding = 13.0f;
         child::spacing = 13.0f;
 
-        page::text_hov = ImLerp(page::text_hov, dark_mode ? ImColor(68, 71, 85) : ImColor(136, 145, 176), dt * 12.0f);
-        page::text = ImLerp(page::text, dark_mode ? ImColor(68, 71, 85) : ImColor(136, 145, 176), dt * 12.0f);
-        page::background_active = ImLerp(page::background_active, dark_mode ? ImColor(31, 33, 38) : ImColor(196, 205, 228), dt * 25.0f);
-        page::background = ImLerp(page::background, dark_mode ? ImColor(22, 23, 25) : ImColor(222, 228, 244), dt * 25.0f);
+        page::text_hov = ImLerp(page::text_hov, dark_mode ? ImColor(235, 235, 235) : ImColor(136, 145, 176), dt * 12.0f);
+        page::text = ImLerp(page::text, dark_mode ? ImColor(142, 142, 148) : ImColor(136, 145, 176), dt * 12.0f);
+        page::background_active = ImLerp(page::background_active, dark_mode ? ImColor(31, 31, 31) : ImColor(196, 205, 228), dt * 25.0f);
+        page::background = ImLerp(page::background, dark_mode ? ImColor(14, 14, 14) : ImColor(222, 228, 244), dt * 25.0f);
 
-        text::text_active = ImLerp(text::text_active, dark_mode ? ImColor(255, 255, 255) : ImColor(0, 0, 0), dt * 12.0f);
-        text::text_hov = ImLerp(text::text_hov, dark_mode ? ImColor(68, 71, 85) : ImColor(68, 71, 81), dt * 12.0f);
-        text::text = ImLerp(text::text, dark_mode ? ImColor(68, 71, 85) : ImColor(68, 71, 81), dt * 12.0f);
+        text::text_active = ImLerp(text::text_active, dark_mode ? ImColor(235, 235, 235) : ImColor(0, 0, 0), dt * 12.0f);
+        text::text_hov = ImLerp(text::text_hov, dark_mode ? ImColor(142, 142, 148) : ImColor(68, 71, 81), dt * 12.0f);
+        text::text = ImLerp(text::text, dark_mode ? ImColor(142, 142, 148) : ImColor(68, 71, 81), dt * 12.0f);
     }
 
     inline void ApplyTheme()
     {
-        // Warm amber accent
-        accent = ImColor(210, 134, 10);
-        separator = ImColor(50, 60, 68);
+        accent = ImColor(142, 134, 246);
+        separator = ImColor(45, 45, 45);
 
-        bg::background = ImColor(15, 20, 24, 230);
-        child::background = ImColor(22, 29, 34, 220);
-        child::cap = ImColor(30, 38, 44, 200);
+        bg::background = ImColor(5, 5, 5, 245);
+        child::background = ImColor(14, 14, 14, 245);
+        child::cap = ImColor(17, 17, 17, 240);
         child::padding = 13.0f;
         child::spacing = 13.0f;
 
-        page::background_active = ImColor(52, 64, 72, 255);
-        page::background = ImColor(28, 36, 42, 200);
-        page::text_hov = ImColor(228, 213, 185);
-        page::text = ImColor(140, 120, 80);
+        page::background_active = ImColor(31, 31, 31, 255);
+        page::background = ImColor(14, 14, 14, 240);
+        page::text_hov = ImColor(235, 235, 235);
+        page::text = ImColor(142, 142, 148);
 
-        elements::background_hovered = ImColor(44, 54, 62, 210);
-        elements::background = ImColor(28, 36, 42, 180);
+        elements::background_hovered = ImColor(31, 31, 31, 240);
+        elements::background = ImColor(17, 17, 17, 220);
 
-        checkbox::mark = ImColor(15, 20, 24);
-        checkbox::background_on = ImColor(210, 134, 10);
-        checkbox::background_off = ImColor(44, 54, 62);
-        checkbox::circle_inactive = ImColor(90, 100, 110);
+        checkbox::mark = ImColor(5, 5, 5);
+        checkbox::background_on = ImColor(142, 134, 246);
+        checkbox::background_off = ImColor(31, 31, 31);
+        checkbox::circle_inactive = ImColor(110, 110, 116);
 
-        text::text_active = ImColor(228, 213, 185);
-        text::text_hov = ImColor(185, 162, 110);
-        text::text = ImColor(112, 102, 82);
+        text::text_active = ImColor(235, 235, 235);
+        text::text_hov = ImColor(142, 134, 246);
+        text::text = ImColor(142, 142, 148);
 
-        widget::background = ImColor(22, 29, 34, 200);
-        widget::outlinecolor = ImColor(58, 70, 80, 180);
+        widget::background = ImColor(17, 17, 17, 240);
+        widget::outlinecolor = ImColor(45, 45, 45, 220);
 
-        button::background = ImColor(22, 29, 34, 200);
-        button::background_hovered = ImColor(38, 48, 56, 220);
-        button::background_active = ImColor(52, 64, 72, 240);
-        button::outline = ImColor(70, 84, 94, 180);
+        button::background = ImColor(22, 22, 22, 240);
+        button::background_hovered = ImColor(31, 31, 31, 245);
+        button::background_active = ImColor(45, 45, 45, 250);
+        button::outline = ImColor(45, 45, 45, 220);
 
         ImGuiStyle& style = ImGui::GetStyle();
         style.ScrollbarSize = 5.0f;
-        style.Colors[ImGuiCol_ScrollbarBg] = ImVec4(0.08f, 0.10f, 0.12f, 0.72f);
-        style.Colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.55f, 0.40f, 0.10f, 0.80f);
-        style.Colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.70f, 0.52f, 0.14f, 0.90f);
-        style.Colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.82f, 0.60f, 0.18f, 1.0f);
+        style.Colors[ImGuiCol_ScrollbarBg] = ImVec4(0.02f, 0.02f, 0.02f, 0.72f);
+        style.Colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.36f, 0.34f, 0.62f, 0.80f);
+        style.Colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.45f, 0.43f, 0.78f, 0.90f);
+        style.Colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.56f, 0.53f, 0.96f, 1.0f);
     }
 
     inline void DrawWindowShadow(const ImVec2& menuSize)
@@ -205,8 +202,7 @@ namespace c
         shadowSettings.rings = 5;
         shadowSettings.spacingBetweenRings = 2;
         shadowSettings.samplesPerCornerSide = 2;
-        // Warm dark shadow
-        shadowSettings.shadowColor = ImGui::ColorConvertU32ToFloat4(IM_COL32(8, 12, 16, 200));
+        shadowSettings.shadowColor = ImGui::ColorConvertU32ToFloat4(IM_COL32(0, 0, 0, 200));
         shadowSettings.shadowSize = ImVec2(0.0f, 0.0f);
         drawRectangleShadowVerticesAdaptive(shadowSettings);
     }
@@ -228,26 +224,23 @@ namespace c
                 rounding
             );
         } else {
-            // Warm slate background
-            drawList->AddRectFilled(min, max, IM_COL32(15, 20, 24, 255), rounding);
+            drawList->AddRectFilled(min, max, IM_COL32(5, 5, 5, 255), rounding);
         }
 
-        // Subtle warm tint overlay
-        drawList->AddRectFilled(min, max, IM_COL32(20, 14, 8, 40), rounding);
-        // Warm amber border
-        drawList->AddRect(min, max, IM_COL32(210, 134, 10, 90), rounding, 0, 1.0f);
+        drawList->AddRectFilled(min, max, IM_COL32(0, 0, 0, 40), rounding);
+        drawList->AddRect(min, max, IM_COL32(45, 45, 45, 180), rounding, 0, 1.0f);
     }
 }
 
 namespace main_runtime_theme
 {
-    inline float g_menuHue = 0.76f;  // violet default for the runtime UI
+    inline float g_menuHue = 0.679f;
 
     // ============================================================
     // THEME SYSTEM
     // ============================================================
     enum ThemeID {
-        THEME_DARK_SLATE  = 0,  // default — deep slate + amber
+        THEME_DARK_SLATE  = 0,
         THEME_MIDNIGHT    = 1,  // near-black + cool blue
         THEME_FOREST      = 2,  // dark green tones
         THEME_BLOOD       = 3,  // crimson dark
@@ -277,19 +270,18 @@ namespace main_runtime_theme
     };
 
     inline ThemePalette g_themes[THEME_COUNT] = {
-        // DARK SLATE (default)
         {
-            "SLATE",
-            IM_COL32(15, 20, 24, 230),   // bgWindow
-            IM_COL32(22, 29, 34, 220),   // bgChild
-            IM_COL32(22, 29, 34, 230),   // bgCap
-            IM_COL32(18, 24, 29, 190),   // bgContent
-            IM_COL32(18, 24, 29, 215),   // bgTabBar
-            IM_COL32(18, 24, 29, 210),   // bgStatusBar
-            IM_COL32(228, 213, 185, 255),// textActive
-            IM_COL32(112, 102, 82, 190), // textMuted
-            IM_COL32(50, 62, 72, 180),   // border
-            0.10f, 0.90f, 0.92f,         // amber accent
+            "ECHO",
+            IM_COL32(5, 5, 5, 245),
+            IM_COL32(14, 14, 14, 250),
+            IM_COL32(17, 17, 17, 250),
+            IM_COL32(14, 14, 14, 245),
+            IM_COL32(14, 14, 14, 245),
+            IM_COL32(14, 14, 14, 245),
+            IM_COL32(235, 235, 235, 255),
+            IM_COL32(142, 142, 148, 255),
+            IM_COL32(45, 45, 45, 255),
+            0.679f, 0.46f, 0.97f,
         },
         // MIDNIGHT
         {
@@ -399,8 +391,8 @@ namespace main_runtime_theme
 
     inline void ApplyAccentFromHue()
     {
-        // Default to warm amber hue (~0.10 in HSV)
-        ImGui::ColorConvertHSVtoRGB(g_menuHue, 0.90f, 0.92f, menu[0], menu[1], menu[2]);
+        const ThemePalette& t = g_themes[g_activeTheme];
+        ImGui::ColorConvertHSVtoRGB(g_menuHue, t.accentSat, t.accentVal, menu[0], menu[1], menu[2]);
         menu[3] = 1.0f;
     }
 
@@ -421,12 +413,12 @@ namespace main_runtime_theme
 
     inline ImVec4 GetSidebarShellBackgroundColor()
     {
-        return ImColor(0, 0, 0, 130);
+        return ImColor(14, 14, 14, 245);
     }
 
     inline ImVec4 GetActiveTabBackgroundColor()
     {
-        return ImColor(0, 0, 0, 150);
+        return ImColor(22, 22, 22, 250);
     }
 
     inline void ApplyThemeState()
@@ -435,7 +427,7 @@ namespace main_runtime_theme
         c::widget_scale = 1.45f;
         const float childPadding = GetChildPadding();
         c::accent = ImColor(GetAccentVec4());
-        c::separator = ImColor(0.0f, 0.0f, 0.0f, 0.0f);
+        c::separator = ImColor(45.0f / 255.0f, 45.0f / 255.0f, 45.0f / 255.0f, 0.70f);
 
         // Read from active theme palette for base background colors
         const ThemePalette& tp = g_themes[g_activeTheme];
@@ -445,7 +437,7 @@ namespace main_runtime_theme
         const ImVec4 tAct = ImGui::ColorConvertU32ToFloat4(tp.textActive);
         const ImVec4 tMut = ImGui::ColorConvertU32ToFloat4(tp.textMuted);
 
-        c::bg::background = ImColor(bgW.x, bgW.y, bgW.z, 0.50f);
+        c::bg::background = ImColor(bgW.x, bgW.y, bgW.z, 0.94f);
         c::child::background = GetActiveTabBackgroundColor();
         c::child::cap = ImColor(bgCh.x, bgCh.y, bgCh.z, 0.88f);
         c::child::padding = childPadding / c::scale;
