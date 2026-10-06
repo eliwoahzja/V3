@@ -1442,29 +1442,76 @@ EGLBoolean hook_eglSwapBuffers(EGLDisplay dpy, EGLSurface surface)
                 draw->AddRectFilled(innerMin, innerMax, IM_COL32(0, 0, 0, 188), innerRounding);
                 draw->AddRectFilledMultiColor(innerMin, ImVec2(innerMax.x, innerMin.y + (innerMax.y - innerMin.y) * 0.44f), main_runtime_theme::GetAccentTintU32(0.22f, 0.11f), main_runtime_theme::GetAccentTintU32(0.16f, 0.06f), IM_COL32(0, 0, 0, 0), IM_COL32(0, 0, 0, 0));
 
+                auto drawLoginButton = [&](const char* label, float y, float width, bool primary) -> bool {
+                    const float buttonX = (500.0f - width) * 0.5f;
+                    ImGui::SetCursorPos(ImVec2(buttonX, y));
+                    if (F50) ImGui::PushFont(F50);
+                    const bool pressed = ImGui::InvisibleButton(label, ImVec2(width, 50.0f));
+                    const bool hovered = ImGui::IsItemHovered();
+                    ImFont* labelFont = ImGui::GetFont();
+                    const float labelSize = ImGui::GetFontSize();
+                    if (F50) ImGui::PopFont();
+
+                    const ImVec2 buttonMin = ImGui::GetItemRectMin();
+                    const ImVec2 buttonMax = ImGui::GetItemRectMax();
+                    const bool useAccent = primary ? !hovered : hovered;
+                    if (useAccent) {
+                        draw->AddRectFilledMultiColor(buttonMin, buttonMax, main_runtime_theme::GetAccentU32(1.0f),
+                            main_runtime_theme::GetAccentTintU32(0.82f), main_runtime_theme::GetAccentTintU32(0.82f),
+                            main_runtime_theme::GetAccentU32(1.0f), 8.0f);
+                    } else {
+                        draw->AddRectFilled(buttonMin, buttonMax, ImGui::GetColorU32(c::button::background), 8.0f);
+                        draw->AddRect(buttonMin, buttonMax, ImGui::GetColorU32(c::button::outline), 8.0f, 0, 1.0f);
+                    }
+
+                    const float labelSizeUse = labelSize > 0.0f ? labelSize : 16.0f;
+                    const ImVec2 labelTextSize = (labelFont != nullptr)
+                        ? labelFont->CalcTextSizeA(labelSizeUse, FLT_MAX, 0.0f, label)
+                        : ImGui::CalcTextSize(label);
+                    const ImVec2 labelTextPos = ImVec2((buttonMin.x + buttonMax.x - labelTextSize.x) * 0.5f,
+                        (buttonMin.y + buttonMax.y - labelTextSize.y) * 0.5f);
+                    const ImU32 labelColor = useAccent ? IM_COL32(10, 10, 14, 255) : ImGui::GetColorU32(c::text::text_active);
+                    if (labelFont != nullptr) draw->AddText(labelFont, labelSizeUse, labelTextPos, labelColor, label);
+                    else draw->AddText(labelTextPos, labelColor, label);
+
+                    return pressed;
+                };
+
                 {
-                    const char* titleText = "JAREDAX CONTAINER";
-                    const float titleSize = 40.0f;
-                    ImVec2 textSize = F50 ? F50->CalcTextSizeA(titleSize, FLT_MAX, 0.0f, titleText) : ImGui::CalcTextSize(titleText);
-                    float titleX = pos.x + (500.0f - textSize.x) * 0.5f;
-                    float titleY = pos.y + 74.0f;
+                    const char* titleText = "LOG IN";
+                    const float titleSize = 34.0f;
+                    const float titleX = pos.x + 30.0f;
+                    const float titleY = pos.y + 56.0f;
                     if (F50) draw->AddText(F50, titleSize, ImVec2(titleX, titleY), ImGui::GetColorU32(c::text::text_active), titleText);
                     else draw->AddText(ImVec2(titleX, titleY), ImGui::GetColorU32(c::text::text_active), titleText);
                 }
 
                 {
-                    const char* helperLine1 = "Paste your key or type it manually";
-                    const char* helperLine2 = "to continue.";
-                    ImVec2 line1Size = ImGui::CalcTextSize(helperLine1);
-                    ImVec2 line2Size = ImGui::CalcTextSize(helperLine2);
-                    draw->AddText(ImVec2(pos.x + (login_size.x - line1Size.x) * 0.5f, pos.y + 142.0f), ImGui::GetColorU32(c::text::text), helperLine1);
-                    draw->AddText(ImVec2(pos.x + (login_size.x - line2Size.x) * 0.5f, pos.y + 162.0f), ImGui::GetColorU32(c::text::text), helperLine2);
+                    const char* helperLine1 = "Authorize through your license key where";
+                    const char* helperLine2 = "your subscription is located.";
+                    const float helperX = pos.x + 30.0f;
+                    draw->AddText(ImVec2(helperX, pos.y + 106.0f), ImGui::GetColorU32(c::text::text), helperLine1);
+                    draw->AddText(ImVec2(helperX, pos.y + 128.0f), ImGui::GetColorU32(c::text::text), helperLine2);
+                }
+
+                {
+                    const char* orLabel = "OR";
+                    const float sepLeft = pos.x + 30.0f;
+                    const float sepRight = pos.x + 470.0f;
+                    const float sepMidY = pos.y + 254.0f;
+                    const ImVec2 orSize = ImGui::CalcTextSize(orLabel);
+                    const float sepMidX = (sepLeft + sepRight) * 0.5f;
+                    const float sepGap = orSize.x * 0.5f + 14.0f;
+                    const ImU32 sepColor = ImGui::GetColorU32(c::text::text);
+                    draw->AddLine(ImVec2(sepLeft, sepMidY), ImVec2(sepMidX - sepGap, sepMidY), sepColor, 1.0f);
+                    draw->AddLine(ImVec2(sepMidX + sepGap, sepMidY), ImVec2(sepRight, sepMidY), sepColor, 1.0f);
+                    draw->AddText(ImVec2(sepMidX - orSize.x * 0.5f, sepMidY - orSize.y * 0.5f), sepColor, orLabel);
                 }
 
                 const float inputWidth = 440.0f;
                 const float inputHeight = 56.0f;
                 const float inputX = (login_size.x - inputWidth) * 0.5f;
-                ImGui::SetCursorPos(ImVec2(inputX, 198.0f));
+                ImGui::SetCursorPos(ImVec2(inputX, 284.0f));
                 ImGui::AstralInput("##key_login", s, sizeof(s), ImVec2(inputWidth, inputHeight));
                 bool loginInputClicked = ImGui::IsItemClicked();
                 bool loginInputActive = ImGui::IsItemActive();
@@ -1479,38 +1526,13 @@ EGLBoolean hook_eglSwapBuffers(EGLDisplay dpy, EGLSurface surface)
                     if (ImGui::GetMousePos().y < screenHeight - keyboardHeight) showKeyboard = false;
                 }
 
-                float pasteButtonWidth = 440.0f;
-                float pasteButtonX = (500 - pasteButtonWidth) / 2.0f;
-                ImGui::SetCursorPos(ImVec2(pasteButtonX, 274.0f));
-                ImGui::PushStyleColor(ImGuiCol_Button, c::button::background);
-                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, c::button::background_hovered);
-                ImGui::PushStyleColor(ImGuiCol_ButtonActive, c::button::background_active);
-                ImGui::PushStyleColor(ImGuiCol_Border, c::button::outline);
-                ImGui::PushStyleColor(ImGuiCol_Text, c::text::text_active);
-                ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 10.0f);
-                ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 1.0f);
-                if (F50) ImGui::PushFont(F50);
-                if (ImGui::Button("PASTE", ImVec2(pasteButtonWidth, 58.0f))) {
+                if (drawLoginButton("PASTE", 176.0f, 440.0f, false)) {
                     auto key = getClipboard();
                     strncpy(s, key.c_str(), sizeof(s) - 1);
                     s[sizeof(s) - 1] = '\0';
                 }
-                if (F50) ImGui::PopFont();
-                ImGui::PopStyleVar(2);
-                ImGui::PopStyleColor(5);
 
-                float loginButtonWidth = 300.0f;
-                float loginButtonX = (500 - loginButtonWidth) / 2.0f;
-                ImGui::SetCursorPos(ImVec2(loginButtonX, 348.0f));
-                ImGui::PushStyleColor(ImGuiCol_Button, c::button::background);
-                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, c::button::background_hovered);
-                ImGui::PushStyleColor(ImGuiCol_ButtonActive, c::button::background_active);
-                ImGui::PushStyleColor(ImGuiCol_Border, c::button::outline);
-                ImGui::PushStyleColor(ImGuiCol_Text, c::text::text_active);
-                ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 10.0f);
-                ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 1.0f);
-                if (F50) ImGui::PushFont(F50);
-                if (ImGui::Button("LOGIN", ImVec2(loginButtonWidth, 58.0f))) {
+                if (drawLoginButton("LOG IN", 360.0f, 440.0f, true)) {
                     err = Login(s);
                     if (err == "OK") {
                         showKeyboard = false;
@@ -1524,12 +1546,8 @@ EGLBoolean hook_eglSwapBuffers(EGLDisplay dpy, EGLSurface surface)
                         g_ShowRadialMenu = true;
                     }
                 }
-                if (F50) ImGui::PopFont();
-                ImGui::PopStyleVar(2);
-                ImGui::PopStyleColor(5);
-
                 if (!err.empty() && err != "OK") {
-                    ImGui::SetCursorPos(ImVec2(52, 424.0f));
+                    ImGui::SetCursorPos(ImVec2(30, 430.0f));
                     ImGui::TextColored(ImColor(255, 90, 90, 255), "Error: %s", err.c_str());
                 }
 
