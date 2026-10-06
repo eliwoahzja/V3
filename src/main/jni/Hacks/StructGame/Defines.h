@@ -144,6 +144,10 @@ void UpdateAllOffset(){
 #define Class_AttackableTarget_m_Health (0x34)
 #define Class_AttackableTarget_m_MaxHealth (0x38)
 
+#define Class_DamageInfo_m_Damage (0x14)
+#define Class_DamageInfo_m_HitGroup (0x54)
+#define EHitGroup_Head (1)
+
 #define Class_Pawn_m_SpineBone (0x1D68)
 #define Class_Pawn_m_NeckBone (0x1D70)
 #define Class_Pawn_m_HipsBone (0x1D78)

@@ -213,12 +213,45 @@ inline float hook_GetMaxJumpHeight(void* instance) {
 //-- Increase Damage
 inline bool (*orig_SingleLineCheckPhysics)(void* instance, int hitType, void* hitTarget, void* hitCollider, Vector3 startPos, Vector3 dir, void* impactInfo) = nullptr;
 inline bool SingleLineCheckPhysics(void* instance, int hitType, void* hitTarget, void* hitCollider, Vector3 startPos, Vector3 dir, void* impactInfo) {
-    if (instance != NULL) {
-        if (Config.ExtraMenu.Hit) {
-            return true;
+    if (instance != NULL && Config.ExtraMenu.Hit) {
+        MatchGame* matchGame = GamePlay::get_MatchGame();
+        if (Tools::IsPtrValid(matchGame)) {
+            List<Pawn*> *enemyPawns = matchGame->EnemyPawns();
+            if (Tools::IsPtrValid(enemyPawns)) {
+                Pawn **enemyItems = enemyPawns->getItems();
+                const int enemyCount = enemyPawns->getSize();
+                if (Tools::IsPtrValid(enemyItems) && enemyCount > 0) {
+                    const float hitboxRadiusSq = Config.ExtraMenu.HitboxScale * Config.ExtraMenu.HitboxScale;
+                    const Vector3 rayAxis = Vector3::Normalized(dir);
+                    for (int i = 0; i < enemyCount; i++) {
+                        Pawn* enemy = enemyItems[i];
+                        if (!Tools::IsPtrValid(enemy) || !enemy->m_IsAlive()) {
+                            continue;
+                        }
+                        const Vector3 toEnemy = enemy->get_HeadPosition() - startPos;
+                        const float alongRay = Vector3::Dot(toEnemy, rayAxis);
+                        if (alongRay <= 0.0f) {
+                            continue;
+                        }
+                        if (Vector3::SqrMagnitude(toEnemy) - (alongRay * alongRay) <= hitboxRadiusSq) {
+                            return true;
+                        }
+                    }
+                }
+            }
         }
     }
     return orig_SingleLineCheckPhysics(instance, hitType, hitTarget, hitCollider, startPos, dir, impactInfo);
+}
+
+inline void* (*orig_CalcDamageInfoInstantHit)(void* instance, void** inImpactInfo, unsigned char inFireMode, void* sourcePos, int clientTime, int ammoCount, float punchX, float punchY, float spreadX, float spreadY, float fightOffSpeed, float fightOffUp) = nullptr;
+inline void* CalcDamageInfoInstantHit(void* instance, void** inImpactInfo, unsigned char inFireMode, void* sourcePos, int clientTime, int ammoCount, float punchX, float punchY, float spreadX, float spreadY, float fightOffSpeed, float fightOffUp) {
+    void* damageInfo = orig_CalcDamageInfoInstantHit(instance, inImpactInfo, inFireMode, sourcePos, clientTime, ammoCount, punchX, punchY, spreadX, spreadY, fightOffSpeed, fightOffUp);
+    if (Config.ExtraMenu.Headshot && damageInfo != NULL) {
+        *(int*)((uintptr_t)damageInfo + Class_DamageInfo_m_HitGroup) = EHitGroup_Head;
+        *(float*)((uintptr_t)damageInfo + Class_DamageInfo_m_Damage) *= Config.ExtraMenu.HeadshotDamage;
+    }
+    return damageInfo;
 }
 
 //-- Long Slide
@@ -844,6 +877,8 @@ inline void InitializeAllHooks() {
 
     //-- Increase Damage
     HOOK_LIB("libunity.so", "0xC1514C0", SingleLineCheckPhysics, orig_SingleLineCheckPhysics);
+
+    HOOK_LIB("libunity.so", "0x5109DE4", CalcDamageInfoInstantHit, orig_CalcDamageInfoInstantHit);
 
 /*
     //-- Long Slide
