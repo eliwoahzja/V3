@@ -1,0 +1,7 @@
+# Native (ndk-build) intermediate + output artifacts (generated)
+src/main/obj/
+src/main/libs/
+.cxx/
+
+# AIDE / Gradle / ant build output (generated)
+build/

@@ -70,7 +70,7 @@ LOCAL_CPPFLAGS         := -Wno-error=format-security -fvisibility=hidden -ffunct
 LOCAL_CPPFLAGS         += -Wno-error=c++11-narrowing -fms-extensions -fno-rtti -fno-exceptions -fpermissive
 
 
-LOCAL_LDFLAGS          += -Wl,--gc-sections,--strip-all, -llog
+LOCAL_LDFLAGS          += -Wl,--gc-sections,--strip-all
 LOCAL_ARM_MODE         := arm
 LOCAL_LDLIBS           := -llog -landroid -lEGL -lGLESv3 -lGLESv2 -lGLESv1_CM -lz
 
@@ -89,7 +89,6 @@ LOCAL_SRC_FILES        := $(FILE_LIST:$(LOCAL_PATH)/%=%) \
                               Substrate/And64InlineHook.cpp \
                               AstralPrtctn/md5.cpp
                               
-LOCAL_LDLIBS := -llog -landroid
 FILE_LIST := $(wildcard $(LOCAL_PATH)/libzip/*.c)
 LOCAL_SRC_FILES += $(FILE_LIST:$(LOCAL_PATH)/%=%)
 
@@ -97,7 +96,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/curl/curl-android-$(TARGET_ARCH_ABI)/include
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/curl/openssl-android-$(TARGET_ARCH_ABI)/include
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/libzip
 
-LOCAL_LDLIBS           := -llog -landroid -lz -lEGL -lGLESv2 -lGLESv3
+LOCAL_LDLIBS           := -llog -landroid -lz -lEGL -lGLESv2 -lGLESv3 -latomic
 LOCAL_STATIC_LIBRARIES := libcurl libssl libcrypto libdobby libfoxcheats libxhook libctorHook
 
 LOCAL_CPP_FEATURES                      := exceptions
