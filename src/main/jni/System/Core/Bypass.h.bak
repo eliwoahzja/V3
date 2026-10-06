@@ -1,0 +1,57 @@
+#pragma once
+
+bool (*orig_bypass)(void *ins);
+bool hook_bypass(void *ins) {
+    return false;
+}
+
+#if defined(__aarch64__)
+
+inline const char *armFalse = "00 00 80 D2 C0 03 5F D6";
+
+#endif
+
+struct range {
+    uintptr_t Irt, Ind;
+    struct Iter {
+      uintptr_t val;
+      bool operator!=(const Iter& it) const {
+        return val <= it.val; 
+      }
+      uintptr_t operator*() const {
+        return val; 
+      }
+      void operator++() {
+        val += 4; 
+      }
+    };
+    Iter begin() const { 
+      return {Irt}; 
+    }
+    Iter end() const {
+      return {Ind}; 
+    }
+};
+
+inline void InitializeProtection() {
+MemoryPatch::createWithHex("libanogs.so", 0x204218, "00 00 80 D2 C0 03 5F D6").Modify();
+MemoryPatch::createWithHex("libanogs.so", 0x20A39C, "00 00 80 D2 C0 03 5F D6").Modify();
+MemoryPatch::createWithHex("libanogs.so", 0x20AE78, "00 00 80 D2 C0 03 5F D6").Modify();
+MemoryPatch::createWithHex("libanogs.so", 0x25FA98, "00 00 80 D2 C0 03 5F D6").Modify();
+MemoryPatch::createWithHex("libanogs.so", 0x2AA880, "00 00 80 D2 C0 03 5F D6").Modify();
+MemoryPatch::createWithHex("libanogs.so", 0x2B63E4, "00 00 80 D2 C0 03 5F D6").Modify();
+MemoryPatch::createWithHex("libanogs.so", 0x36F0AC, "00 00 80 D2 C0 03 5F D6").Modify();
+MemoryPatch::createWithHex("libanogs.so", 0x334310, "00 00 80 D2 C0 03 5F D6").Modify();
+MemoryPatch::createWithHex("libanogs.so", 0x39AE94, "00 00 80 D2 C0 03 5F D6").Modify();
+MemoryPatch::createWithHex("libanogs.so", 0x44BC90, "00 00 80 D2 C0 03 5F D6").Modify();
+MemoryPatch::createWithHex("libanogs.so", 0x491EDC, "00 00 80 D2 C0 03 5F D6").Modify();
+MemoryPatch::createWithHex("libanogs.so", 0x497E64, "00 00 80 D2 C0 03 5F D6").Modify();
+MemoryPatch::createWithHex("libanogs.so", 0x4B68A0, "00 00 80 D2 C0 03 5F D6").Modify();
+MemoryPatch::createWithHex("libanogs.so", 0x4B9C10, "00 00 80 D2 C0 03 5F D6").Modify();
+    for (auto offs : range{0x1, 0x1000}) {
+        MemoryPatch::createWithHex("libanogs.so", offs, armFalse).Modify();
+    }
+    
+}
+    
+    
