@@ -956,6 +956,7 @@ static bool g_App = false;
 struct My_Patches
 {
     MemoryPatch A1, grap, NoCrouch, SpeedhackX, SpeedhackX1, NoWingsuit, fpss, frame;
+    MemoryPatch NoCrouchPawn, NoCrouchPlayerPawn;
 } Patches;
 
 float AVIWA = 119.167f;
@@ -1862,6 +1863,7 @@ EGLBoolean hook_eglSwapBuffers(EGLDisplay dpy, EGLSurface surface)
                                     custom::Checkbox("Fast Scope", &Config.ExtraMenu.Scope);
                                     custom::Checkbox("Quick Switch", &Config.ExtraMenu.Switch);
                                     custom::Checkbox("Weapon Kinetic", &Config.ExtraMenu.Kinetic);
+                                    custom::Checkbox("No Crouch", &Config.ExtraMenu.NoCrouch);
                                     EndContentChild(left);
                                 }
                                 custom::EndGroup();
@@ -1994,6 +1996,24 @@ EGLBoolean hook_eglSwapBuffers(EGLDisplay dpy, EGLSurface surface)
 
                     if (Config.ExtraMenu.WallHack) Patches.A1.Modify();
                     else Patches.A1.Restore();
+
+                    static bool noCrouchPatched = false;
+                    if (Config.ExtraMenu.NoCrouch != noCrouchPatched)
+                    {
+                        if (Config.ExtraMenu.NoCrouch)
+                        {
+                            Patches.NoCrouch.Modify();
+                            Patches.NoCrouchPawn.Modify();
+                            Patches.NoCrouchPlayerPawn.Modify();
+                        }
+                        else
+                        {
+                            Patches.NoCrouch.Restore();
+                            Patches.NoCrouchPawn.Restore();
+                            Patches.NoCrouchPlayerPawn.Restore();
+                        }
+                        noCrouchPatched = Config.ExtraMenu.NoCrouch;
+                    }
                 }
                 ImGui::End();
                 ImGui::PopStyleVar();
@@ -2099,6 +2119,8 @@ void Init_Thread()
 
     Patches.A1 = MemoryPatch::createWithHex("libunity.so", 0x8D781DC, "1F 20 03 D5 E0 03 13 AA");
     Patches.NoCrouch = MemoryPatch::createWithHex("libunity.so",0x511F50C,"00 00 80 D2 C0 03 5F D6");
+    Patches.NoCrouchPawn = MemoryPatch::createWithHex("libunity.so",0x524D15C,"00 00 80 D2 C0 03 5F D6");
+    Patches.NoCrouchPlayerPawn = MemoryPatch::createWithHex("libunity.so",0x54B6820,"00 00 80 D2 C0 03 5F D6");
     Patches.NoWingsuit = MemoryPatch::createWithHex("libunity.so",0x54A12F4,"00 00 80 D2 C0 03 5F D6");
 
     DobbyHook((void *)getAbsoluteAddress("libunity.so", 0xC9B6F90), (void *)&WeaponFireComponent_Instant_CreateBulletLine, (void **)&oWeaponFireComponent_Instant_CreateBulletLine);

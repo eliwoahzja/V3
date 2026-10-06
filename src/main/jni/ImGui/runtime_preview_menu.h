@@ -341,6 +341,7 @@ inline void RenderMemoryTab(float childWidth, float childHeight) {
         custom::Checkbox("Fast Scope", &Config.ExtraMenu.Scope);
         custom::Checkbox("Quick Switch", &Config.ExtraMenu.Switch);
         custom::Checkbox("Weapon Kinetic", &Config.ExtraMenu.Kinetic);
+        custom::Checkbox("No Crouch", &Config.ExtraMenu.NoCrouch);
         EndContentChild(left);
     }
     custom::EndGroup();
