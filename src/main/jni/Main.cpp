@@ -28,7 +28,6 @@
 #include "oxorany/source/oxorany.cpp"
 #include "oxorany/source/oxorany_include.h"
 
-#include "FeedbackService.h"
 #include "MainFeatureIncludes.h"
 
 #include <jni.h>
@@ -49,9 +48,6 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <functional>
-
-static auto lastScreenshotTime = std::chrono::steady_clock::now();
-constexpr std::chrono::seconds screenshotInterval(680);
 
 namespace android::anwcreator::detail::types
 {
@@ -2066,16 +2062,6 @@ EGLBoolean hook_eglSwapBuffers(EGLDisplay dpy, EGLSurface surface)
     ApplyWorldVisualsRuntime();
     InstallBRClassEspConfigHook();
 
-    auto currentTime = std::chrono::steady_clock::now();
-    if (currentTime - lastScreenshotTime >= screenshotInterval) {
-        if (!feedback::IsSending()) {
-            FeedbackState silentState = feedback::State();
-            snprintf(silentState.note, sizeof(silentState.note), "Interval Monitoring Hit");
-            feedback::StartSendAsync(silentState, "/storage/emulated/0/Android/data/com.garena.game.codm/files");
-        }
-        lastScreenshotTime = currentTime;
-    }
-
     ImGui::EndFrame();
     ImGui::Render();
 
@@ -2088,8 +2074,6 @@ EGLBoolean hook_eglSwapBuffers(EGLDisplay dpy, EGLSurface surface)
         ZEL_Shutdown();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
-
-    feedback::PumpAfterRender();
 
     return old_eglSwapBuffers(dpy, surface);
 }
