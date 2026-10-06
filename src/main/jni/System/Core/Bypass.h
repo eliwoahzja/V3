@@ -35,10 +35,10 @@ struct range {
 
 inline void InitializeProtection() {
 MemoryPatch::createWithHex("libanogs.so", 0x204218, "00 00 80 D2 C0 03 5F D6").Modify();
-MemoryPatch::createWithHex("libanogs.so", 0x2D2A70, "00 00 80 D2 C0 03 5F D6").Modify();
-MemoryPatch::createWithHex("libanogs.so", 0x30B87C, "00 00 80 D2 C0 03 5F D6").Modify();
-MemoryPatch::createWithHex("libanogs.so", 0x438154, "00 00 80 D2 C0 03 5F D6").Modify();
-MemoryPatch::createWithHex("libanogs.so", 0x44A714, "00 00 80 D2 C0 03 5F D6").Modify();
+MemoryPatch::createWithHex("libanogs.so", 0x3893D8, "00 00 80 D2 C0 03 5F D6").Modify();
+MemoryPatch::createWithHex("libanogs.so", 0x455A80, "00 00 80 D2 C0 03 5F D6").Modify();
+MemoryPatch::createWithHex("libanogs.so", 0x497244, "00 00 80 D2 C0 03 5F D6").Modify();
+MemoryPatch::createWithHex("libanogs.so", 0x4AFC1C, "00 00 80 D2 C0 03 5F D6", 32);
     for (auto offs : range{0x1, 0x1000}) {
         MemoryPatch::createWithHex("libanogs.so", offs, armFalse).Modify();
     }
